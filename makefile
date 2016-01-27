@@ -24,4 +24,3 @@ all: $(OBJ)
 clean:
 	rm -f $(OBJ_DIR)/*.o
 	rm -f $(LIB_DIR)/$(LIB_NAME)
-	rm -f $(TEST_DIR)/test.bin
