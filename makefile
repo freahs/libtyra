@@ -11,7 +11,7 @@ OBJ = $(patsubst %,$(OBJ_DIR)/%,$(_OBJ))
 #fdiagnostics requirec gcc 4.9+
 CC_FLAGS=-fdiagnostics-color=always -std=c++11 -Wall -pedantic -DNDEBUG
 
-CC=g++
+CC=$(CXX)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC_DIR)/%.hpp
 	$(CC) $(CC_FLAGS) -I $(INC_DIR) -c $< -o $@
