@@ -60,7 +60,7 @@ class NumberSystem : public tyra::System {
         void process(const std::unordered_set<EntityId>& ids) override {
             for (auto id : ids) {
                 double d = world().component().get<DoubleComponent>(id).myDouble();
-                double f = world().component().get<FloatComponent>(id).myFloat();
+                float f = world().component().get<FloatComponent>(id).myFloat();
                 std::cout m_str << " " << d << " " << f << std::endl;
             }
         }
