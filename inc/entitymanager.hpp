@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-#ifndef LIBTYRA_ENTITYMANAGER_H
-#define LIBTYRA_ENTITYMANAGER_H
+#ifndef TYRA_ENTITYMANAGER_H
+#define TYRA_ENTITYMANAGER_H
 
-#include "../inc/defs.hpp"
+#include "manager.hpp"
+
+#include "defs.hpp"
 
 #include <unordered_set>
 #include <vector>
@@ -25,7 +27,7 @@
 
 namespace tyra {
 
-    class EntityManager {
+    class EntityManager : public Manager {
 
         std::vector<EntityVersion>      m_pool;
         std::vector<EntityIndex>        m_free;

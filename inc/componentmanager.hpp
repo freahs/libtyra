@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-#ifndef LIBTYRA_COMPONENTMANAGER_H
-#define LIBTYRA_COMPONENTMANAGER_H
+#ifndef TYRA_COMPONENTMANAGER_H
+#define TYRA_COMPONENTMANAGER_H
 
 #include "../inc/defs.hpp"
+#include "../inc/manager.hpp"
 #include "../inc/typeid.hpp"
 
 #include <array>
@@ -29,7 +30,7 @@ namespace tyra {
 
     class Component;
 
-    class ComponentManager {
+    class ComponentManager : public Manager {
         private:
             typedef std::array<Component*, MAX_COMPONENT_TYPES>	ComponentArray;
             typedef std::bitset<MAX_COMPONENT_TYPES>            ComponentBitSet;
@@ -60,23 +61,23 @@ namespace tyra {
     };
 
     template <typename T> bool ComponentManager::valid(EntityId entity_id) const {
-        static_assert(std::is_base_of<Component, T>::value, "Entity::has_component: T must be derived from Component");
+        static_assert(std::is_base_of<Component, T>::value, "ComponentManager::valid: T must be derived from Component");
         return valid(entity_id, Type<Component>::id<T>());
     }
 
     template <typename T> T& ComponentManager::get(EntityId entity_id) const {
-        static_assert(std::is_base_of<Component, T>::value, "Entity::get_component: T must be derived from Component");
+        static_assert(std::is_base_of<Component, T>::value, "ComponentManager::get: T must be derived from Component");
         return static_cast<T&>(*get(Type<Component>::id<T>(), entity_id));
     }
 
     template <typename T, typename... Args>	void ComponentManager::add(EntityId entity_id, Args&&... args)	{
-        static_assert(std::is_base_of<Component, T>::value, "Entity::add_component: T must be derived from Component");
+        static_assert(std::is_base_of<Component, T>::value, "ComponentManager::add: T must be derived from Component");
         T* ptr = new T{std::forward<Args>(args)...};
         add(entity_id, Type<Component>::id<T>(), ptr);
     }
 
     template <typename T> void ComponentManager::remove(EntityId entity_id) {
-        static_assert(std::is_base_of<Component, T>::value, "Entity::remove_component: T must be derived from Component");
+        static_assert(std::is_base_of<Component, T>::value, "ComponentManager::remove: T must be derived from Component");
         removeComponent(entity_id, Type<Component>::id<T>());
     }
 

@@ -16,12 +16,25 @@
 
 #include "../inc/world.hpp"
 
+#include "../inc/componentmanager.hpp"
 #include "../inc/defs.hpp"
+#include "../inc/entitymanager.hpp"
 #include "../inc/system.hpp"
+#include "../inc/systemmanager.hpp"
+
 
 #include <cstdlib>
 
 namespace tyra {
+
+    World::World() :
+    m_component_manager(new ComponentManager()),
+    m_entity_manager(new EntityManager()),
+    m_system_manager(new SystemManager()) {
+        m_component_manager->world(*this);
+        m_entity_manager->world(*this);
+        m_system_manager->world(*this);
+    }
 
     void World::update() {
         if (processing()) {
@@ -36,5 +49,9 @@ namespace tyra {
             component().updated().clear();
         }
     }
+
+    EntityManager& World::entity()         { return *m_entity_manager; }
+    ComponentManager& World::component()   { return *m_component_manager; }
+    SystemManager& World::system()         { return *m_system_manager; }
 
 }

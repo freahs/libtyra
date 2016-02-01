@@ -4,7 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -17,6 +17,8 @@
 #ifndef LIBTYRA_SYSTEMMANAGER_H
 #define LIBTYRA_SYSTEMMANAGER_H
 
+#include "manager.hpp"
+
 #include "defs.hpp"
 #include "typeid.hpp"
 
@@ -27,16 +29,14 @@ namespace tyra {
     class System;
     class World;
 
-    class SystemManager {
+    class SystemManager : public Manager {
         private:
             std::vector<System*>    m_systems;
-            World*                  m_world;
 
             void add(TypeId, System*);
             System* get(TypeId);
 
         public:
-            SystemManager(World& world) : m_world(&world) { }
             template<typename T, typename... Args> void add(Args&&... args);
             template<typename T> T& get();
             std::vector<System*>& all();

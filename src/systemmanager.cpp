@@ -23,7 +23,7 @@
 namespace tyra {
 
     void SystemManager::add(TypeId type_id, System* system_ptr) {
-        system_ptr->world(*m_world);
+        system_ptr->world(world());
         size_t system_index = static_cast<size_t>(type_id);
         if (m_systems.size() < system_index + 1) {
             m_systems.resize(system_index + 1);
