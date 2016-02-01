@@ -23,6 +23,7 @@
 
 #include <array>
 #include <bitset>
+#include <cstdint>
 #include <unordered_set>
 #include <vector>
 

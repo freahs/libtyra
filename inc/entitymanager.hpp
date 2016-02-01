@@ -17,9 +17,9 @@
 #ifndef TYRA_ENTITYMANAGER_H
 #define TYRA_ENTITYMANAGER_H
 
-#include "defs.hpp"
 #include "manager.hpp"
 
+#include <cstdint>
 #include <unordered_set>
 #include <vector>
 

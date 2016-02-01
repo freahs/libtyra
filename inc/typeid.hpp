@@ -40,8 +40,7 @@
 #ifndef TYRA_TYPE_ID_H
 #define TYRA_TYPE_ID_H
 
-#include "defs.hpp"
-
+#include <cstdint>
 #include <type_traits>
 
 namespace tyra {

@@ -21,6 +21,7 @@
 #include "manager.hpp"
 #include "typeid.hpp"
 
+#include <cstdint>
 #include <map>
 #include <unordered_set>
 

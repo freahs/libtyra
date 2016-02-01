@@ -18,7 +18,6 @@
 #define TYRA_SYSTEM_H
 
 #include "componentmanager.hpp"
-#include "defs.hpp"
 #include "typeid.hpp"
 
 #include <bitset>

@@ -17,7 +17,6 @@
 #ifndef TYRA_WORLD_H
 #define TYRA_WORLD_H
 
-#include "defs.hpp"
 #include "entitymanager.hpp"
 
 #include <map>

@@ -18,8 +18,6 @@
 #define TYRA_SYSTEMMANAGER_H
 
 #include "manager.hpp"
-
-#include "defs.hpp"
 #include "typeid.hpp"
 
 #include <vector>

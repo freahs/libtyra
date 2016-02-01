@@ -17,7 +17,6 @@
 #include "../inc/world.hpp"
 
 #include "../inc/componentmanager.hpp"
-#include "../inc/defs.hpp"
 #include "../inc/entitymanager.hpp"
 #include "../inc/system.hpp"
 #include "../inc/systemmanager.hpp"
