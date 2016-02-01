@@ -42,10 +42,11 @@
 
 #include "defs.hpp"
 
-#include <cstdint>
 #include <type_traits>
 
 namespace tyra {
+
+	typedef std::uint8_t TypeId;
 
 	template <typename B> class Type {
 		static TypeId m_next_type_id;

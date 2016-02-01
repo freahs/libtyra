@@ -17,9 +17,9 @@
 #ifndef TYRA_COMPONENTMANAGER_H
 #define TYRA_COMPONENTMANAGER_H
 
-#include "../inc/defs.hpp"
-#include "../inc/manager.hpp"
-#include "../inc/typeid.hpp"
+#include "entitymanager.hpp"
+#include "manager.hpp"
+#include "typeid.hpp"
 
 #include <array>
 #include <bitset>
@@ -27,6 +27,8 @@
 #include <vector>
 
 namespace tyra {
+
+    const std::size_t MAX_COMPONENT_TYPES = UINT8_MAX;
 
     struct Component {
             virtual ~Component() { }

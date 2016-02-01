@@ -17,15 +17,20 @@
 #ifndef TYRA_ENTITYMANAGER_H
 #define TYRA_ENTITYMANAGER_H
 
-#include "manager.hpp"
-
 #include "defs.hpp"
+#include "manager.hpp"
 
 #include <unordered_set>
 #include <vector>
 
 
 namespace tyra {
+
+    const std::size_t MAX_ENTITIES = UINT16_MAX;
+
+    typedef std::uint16_t   EntityVersion;  // entity_id >> 16
+    typedef std::uint16_t   EntityIndex;    // entity_id & 0xFFFF
+    typedef std::uint32_t   EntityId;       // (entity_version << 16) | entity_index
 
     class EntityManager : public Manager {
 

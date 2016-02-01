@@ -15,6 +15,7 @@
  */
 
 #include "../inc/entitymanager.hpp"
+
 #include "../inc/assert.hpp"
 
 namespace tyra {

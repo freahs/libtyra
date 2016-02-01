@@ -17,6 +17,7 @@
 #ifndef TYRA_SYSTEM_H
 #define TYRA_SYSTEM_H
 
+#include "componentmanager.hpp"
 #include "defs.hpp"
 #include "typeid.hpp"
 

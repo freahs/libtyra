@@ -17,10 +17,10 @@
 #ifndef TYRA_WORLD_H
 #define TYRA_WORLD_H
 
-#include "../inc/defs.hpp"
+#include "defs.hpp"
+#include "entitymanager.hpp"
 
 #include <map>
-
 
 namespace tyra {
 

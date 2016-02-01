@@ -17,25 +17,25 @@
 #ifndef TYRA_EVENTMANAGER_H
 #define TYRA_EVENTMANAGER_H
 
-#include "manager.hpp"
-
 #include "defs.hpp"
-#include "entitymanager.hpp"
+#include "manager.hpp"
 #include "typeid.hpp"
 
 #include <map>
-#include <set>
+#include <unordered_set>
 
 namespace tyra {
+
+    const std::size_t MAX_EVENT_TYPES = UINT8_MAX;
 
     class Event {
     public:
         virtual void run(EntityId) const { }
     };
 
-    class EventManager : public manager {
+    class EventManager : public Manager {
     private:
-        std::map<TypeId, std::set<EntityId>> m_events;
+        std::map<TypeId, std::unordered_set<EntityId>> m_events;
 
         void add(EntityId, TypeId);
         void remove(EntityId, TypeId);
