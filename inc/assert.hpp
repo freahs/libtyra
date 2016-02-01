@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef LIBTYRA_ASSERT_H
-#define LIBTYRA_ASSERT_H
+#ifndef TYRA_ASSERT_H
+#define TYRA_ASSERT_H
 
 #ifdef NDEBUG
 

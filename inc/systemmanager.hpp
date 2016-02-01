@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef LIBTYRA_SYSTEMMANAGER_H
-#define LIBTYRA_SYSTEMMANAGER_H
+#ifndef TYRA_SYSTEMMANAGER_H
+#define TYRA_SYSTEMMANAGER_H
 
 #include "manager.hpp"
 

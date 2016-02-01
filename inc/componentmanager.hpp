@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef LIBTYRA_COMPONENTMANAGER_H
-#define LIBTYRA_COMPONENTMANAGER_H
+#ifndef TYRA_COMPONENTMANAGER_H
+#define TYRA_COMPONENTMANAGER_H
 
 #include "../inc/defs.hpp"
 #include "../inc/manager.hpp"
