@@ -16,7 +16,6 @@
 
 #include "../inc/componentmanager.hpp"
 
-#include "../inc/component.hpp"
 #include "../inc/defs.hpp"
 #include "../inc/entitymanager.hpp"
 

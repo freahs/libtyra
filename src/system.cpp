@@ -17,7 +17,6 @@
 #include "../inc/system.hpp"
 
 #include "../inc/assert.hpp"
-#include "../inc/component.hpp"
 #include "../inc/componentmanager.hpp"
 #include "../inc/typeid.hpp"
 #include "../inc/world.hpp"
