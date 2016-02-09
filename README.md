@@ -43,10 +43,10 @@ struct FloatComponent : tyra::Component {
 Components are then added to entities
 
 ```c++
-EntityId entity_1 = world().entity().create();
-world.component().add<IntComponent>(entity_1);
-world.component().add<DoubleComponent>(entity_1);
-world.component().add<FloatComponent>(entity_1);
+EntityId entity_id = world().entity().create();
+world.component().add<IntComponent>(entity_id);
+world.component().add<DoubleComponent>(entity_id);
+world.component().add<FloatComponent>(entity_id);
 ```
 
 Arguments to components are passed after the EntityId
@@ -54,10 +54,10 @@ Arguments to components are passed after the EntityId
 ```c++
 struct PositionComponent : public tyra::Component {
 	int m_x, m_y;	
-	SomeComponent(int x, int y) : m_x(x), m_y(y) { }
+	PositionComponent(int x, int y) : m_x(x), m_y(y) { }
 };
 
-world.component().add<PositionComponent>(some_entity_id, 1, 2);
+world.component().add<PositionComponent>(entity_id, 1, 2);
 ```
 
 ### Systems
