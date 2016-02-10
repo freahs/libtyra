@@ -26,13 +26,13 @@
 namespace tyra {
 
     World::World() :
-    m_component_manager(new ComponentManager()),
-    m_entity_manager(new EntityManager()),
-    m_system_manager(new SystemManager()) {
-        m_component_manager->world(*this);
-        m_entity_manager->world(*this);
-        m_system_manager->world(*this);
-    }
+        m_component_manager(new ComponentManager()),
+        m_entity_manager(new EntityManager()),
+        m_system_manager(new SystemManager()) {
+            m_component_manager->world(*this);
+            m_entity_manager->world(*this);
+            m_system_manager->world(*this);
+        }
 
     void World::update() {
         if (processing()) {
@@ -51,5 +51,17 @@ namespace tyra {
     EntityManager& World::entity()         { return *m_entity_manager; }
     ComponentManager& World::component()   { return *m_component_manager; }
     SystemManager& World::system()         { return *m_system_manager; }
+
+    EntityId World::tag(const std::string& tag) const {
+        auto res = m_tags.find(tag);
+        if (res == m_tags.end()) {
+            return -1;
+        }
+        return res->second;
+    }
+
+    void World::tag(const std::string& tag, EntityId entity_id) {
+        m_tags[tag] = entity_id;
+    }
 
 }
