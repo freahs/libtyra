@@ -40,6 +40,25 @@ struct FloatComponent : tyra::Component {
 };
 ```
 
+Components are then added to entities
+
+```c++
+EntityId entity_id = world().entity().create();
+world.component().add<IntComponent>(entity_id);
+world.component().add<DoubleComponent>(entity_id);
+world.component().add<FloatComponent>(entity_id);
+```
+
+Arguments to components are passed after the EntityId
+
+```c++
+struct PositionComponent : public tyra::Component {
+	int m_x, m_y;	
+	PositionComponent(int x, int y) : m_x(x), m_y(y) { }
+};
+
+world.component().add<PositionComponent>(entity_id, 1, 2);
+```
 
 ### Systems
 
@@ -61,7 +80,7 @@ class NumberSystem : public tyra::System {
             for (auto id : ids) {
                 double d = world().component().get<DoubleComponent>(id).myDouble();
                 float f = world().component().get<FloatComponent>(id).myFloat();
-                std::cout m_str << " " << d << " " << f << std::endl;
+                std::cout << m_str << " " << d << " " << f << std::endl;
             }
         }
 };
