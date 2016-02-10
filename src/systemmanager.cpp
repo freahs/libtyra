@@ -17,6 +17,7 @@
 #include "../inc/systemmanager.hpp"
 
 #include "../inc/system.hpp"
+#include "../inc/typeid.hpp"
 
 #include <cstdlib>
 

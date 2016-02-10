@@ -17,7 +17,7 @@
 #ifndef TYRA_EVENTMANAGER_H
 #define TYRA_EVENTMANAGER_H
 
-#include "defs.hpp"
+#include "entitymanager.hpp"
 #include "manager.hpp"
 #include "typeid.hpp"
 

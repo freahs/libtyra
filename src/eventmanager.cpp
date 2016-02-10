@@ -16,7 +16,7 @@
 
 #include "../inc/eventmanager.hpp"
 
-#include "../inc/defs.hpp"
+#include "../inc/entitymanager.hpp"
 
 namespace tyra {
 
