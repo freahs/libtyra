@@ -34,6 +34,12 @@ namespace tyra {
             m_system_manager->world(*this);
         }
 
+    World::~World() {
+        delete m_component_manager;
+        delete m_entity_manager;
+        delete m_system_manager;
+    }
+
     void World::update() {
         if (processing()) {
             preUpdate();

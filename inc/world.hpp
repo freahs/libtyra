@@ -29,10 +29,10 @@ namespace tyra {
 
     class World {
         private:
-            ComponentManager*	m_component_manager;
-            EntityManager*		m_entity_manager;
+            ComponentManager*   m_component_manager;
+            EntityManager*      m_entity_manager;
             SystemManager*      m_system_manager;
-            bool				m_processing;
+            bool                m_processing;
 
             std::map<std::string, EntityId> m_tags;
 
@@ -42,7 +42,7 @@ namespace tyra {
 
         public:
             World();
-            virtual ~World() = default;
+            ~World();
 
             void start()            { m_processing = true; }
             void stop()             { m_processing = false; }
