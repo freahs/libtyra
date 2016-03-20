@@ -83,7 +83,7 @@ namespace tyra {
 
     template <typename T> void ComponentManager::remove(EntityId entity_id) {
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::remove: T must be derived from Component");
-        removeComponent(entity_id, Type<Component>::id<T>());
+        remove(entity_id, Type<Component>::id<T>());
     }
 
 }
