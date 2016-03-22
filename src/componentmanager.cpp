@@ -89,7 +89,6 @@ namespace tyra {
 
     Component* ComponentManager::get(EntityId entity_id, TypeId type_id) const {
         EntityIndex entity_index = EntityManager::index(entity_id);
-
         return m_components[entity_index][type_id];
     }
 

@@ -25,7 +25,7 @@
 
 namespace tyra {
 
-    class Component;
+    struct Component;
     class World;
 
     class System {
@@ -40,8 +40,8 @@ namespace tyra {
             void requireAll(TypeId);
             void exclude(TypeId);
 
-            void addEntity(TypeId);
-            void removeEntity(TypeId);
+            void addEntity(EntityId);
+            void removeEntity(EntityId);
 
         protected:
             World& world() const { return *m_world; }

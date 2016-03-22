@@ -41,12 +41,12 @@ namespace tyra {
         m_exclude_components[id] = 1;
     }
 
-    void System::addEntity(TypeId id) {
+    void System::addEntity(EntityId id) {
         m_entities.insert(id);
         entityAdded(id);
     }
 
-    void System::removeEntity(TypeId id) {
+    void System::removeEntity(EntityId id) {
         m_entities.erase(id);
         entityRemoved(id);
     }
