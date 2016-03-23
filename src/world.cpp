@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-#include "../inc/world.hpp"
+#include "world.hpp"
 
-#include "../inc/componentmanager.hpp"
-#include "../inc/entitymanager.hpp"
-#include "../inc/system.hpp"
-#include "../inc/systemmanager.hpp"
+#include "componentmanager.hpp"
+#include "entitymanager.hpp"
+#include "system.hpp"
+#include "systemmanager.hpp"
 
+#include <chrono>
 #include <cstdlib>
 
 namespace tyra {
@@ -28,7 +29,9 @@ namespace tyra {
     World::World() :
         m_component_manager(new ComponentManager()),
         m_entity_manager(new EntityManager()),
-        m_system_manager(new SystemManager()) {
+        m_system_manager(new SystemManager()),
+        m_prev_update(Time::now()),
+        m_delta(0) {
             m_component_manager->world(*this);
             m_entity_manager->world(*this);
             m_system_manager->world(*this);
@@ -41,6 +44,10 @@ namespace tyra {
     }
 
     void World::update() {
+        TimePoint time_now = Time::now();
+        m_delta = std::chrono::duration_cast<Ms>(time_now - m_prev_update).count();
+        m_prev_update = time_now;
+
         if (processing()) {
             preUpdate();
             for(System* sys : system().all()) {
@@ -68,6 +75,10 @@ namespace tyra {
 
     void World::tag(const std::string& tag, EntityId entity_id) {
         m_tags[tag] = entity_id;
+    }
+
+    int World::delta() const {
+        return m_delta;
     }
 
 }

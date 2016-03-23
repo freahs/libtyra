@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#include "../inc/eventmanager.hpp"
+#include "eventmanager.hpp"
 
-#include "../inc/entitymanager.hpp"
+#include "entitymanager.hpp"
 
 namespace tyra {
 

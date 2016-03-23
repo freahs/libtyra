@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#include "../inc/componentmanager.hpp"
+#include "componentmanager.hpp"
 
-#include "../inc/entitymanager.hpp"
+#include "entitymanager.hpp"
 
 #include <bitset>
 

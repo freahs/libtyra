@@ -38,7 +38,7 @@ namespace tyra {
         std::vector<EntityIndex>        m_free;
         std::unordered_set<EntityIndex> m_active;
 
-        public:
+    public:
         EntityIndex static index(EntityId id )                 { return id & 0xFFFF; }
         EntityVersion static version(EntityId id)              { return id >> 16; }
         EntityId static id(EntityVersion ver, EntityIndex idx) { return (ver << 16) | idx; }
@@ -51,6 +51,8 @@ namespace tyra {
         bool active(EntityId) const;
         void activate(EntityId);
         void deactivate(EntityId);
+
+        size_t size() const;
     };
 
 }

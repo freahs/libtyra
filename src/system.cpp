@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#include "../inc/system.hpp"
+#include "system.hpp"
 
-#include "../inc/assert.hpp"
-#include "../inc/componentmanager.hpp"
-#include "../inc/typeid.hpp"
-#include "../inc/world.hpp"
+#include "assert.hpp"
+#include "componentmanager.hpp"
+#include "typeid.hpp"
+#include "world.hpp"
 
 #include <bitset>
 
@@ -55,6 +55,10 @@ namespace tyra {
         bool has_all = false;
         bool has_one = false;
         bool has_excluded = false;
+
+        if (m_require_all_components.count() == 0 && m_require_one_components.count() == 0) {
+            return;
+        }
 
         for (size_t i = 0; i < world().component().size(); ++i) {
             if (m_exclude_components[i] && entity_components[i]) { has_excluded = true; break; }

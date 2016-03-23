@@ -19,26 +19,26 @@
 
 #include "componentmanager.hpp"
 #include "typeid.hpp"
+#include "vectormap.hpp"
 
 #include <bitset>
-#include <unordered_map>
-#include <unordered_set>
+
+
 
 namespace tyra {
 
     struct Component;
     class World;
 
-
     class System {
     public:
-        typedef std::unordered_set<EntityId> container_type;
+        typedef VectorMap<EntityId> Container;
 
     private:
         std::bitset<MAX_COMPONENT_TYPES>    m_require_one_components;
         std::bitset<MAX_COMPONENT_TYPES>    m_require_all_components;
         std::bitset<MAX_COMPONENT_TYPES>    m_exclude_components;
-        std::unordered_set<EntityId>        m_entities;
+        Container                           m_entities;
         World*                              m_world;
 
         void requireOne(TypeId);
@@ -54,7 +54,7 @@ namespace tyra {
         template<typename T> void requireAll();
         template<typename T> void exclude();
 
-        virtual void process(const container_type&) { }
+        virtual void process(const Container&) { }
 
         virtual void entityAdded(EntityId) { }
         virtual void entityRemoved(EntityId) { }

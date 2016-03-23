@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include "../inc/systemmanager.hpp"
+#include "systemmanager.hpp"
 
-#include "../inc/system.hpp"
-#include "../inc/typeid.hpp"
+#include "system.hpp"
+#include "typeid.hpp"
 
 #include <cstdlib>
 

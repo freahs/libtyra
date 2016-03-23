@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#include "../inc/entitymanager.hpp"
+#include "entitymanager.hpp"
 
-#include "../inc/assert.hpp"
+#include "assert.hpp"
 
 namespace tyra {
 
@@ -88,6 +88,10 @@ namespace tyra {
     void EntityManager::deactivate(EntityId entity_id) {
         ASSERT_ERROR(valid(entity_id), "EntityManager::deactivate: Invalid entity.");
         m_active.erase(entity_id);
+    }
+
+    size_t EntityManager::size() const {
+        return 0;
     }
 
 }
