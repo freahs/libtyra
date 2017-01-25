@@ -19,9 +19,9 @@
 
 #include "componentmanager.hpp"
 #include "typeid.hpp"
-#include "vectormap.hpp"
 
 #include <bitset>
+#include <unordered_set>
 
 
 
@@ -32,7 +32,7 @@ namespace tyra {
 
     class System {
     public:
-        typedef VectorMap<EntityId> Container;
+        typedef std::unordered_set<EntityId> Container;
 
     private:
         std::bitset<MAX_COMPONENT_TYPES>    m_require_one_components;

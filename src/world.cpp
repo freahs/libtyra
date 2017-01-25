@@ -50,14 +50,20 @@ namespace tyra {
 
         if (processing()) {
             preUpdate();
+
             for(System* sys : system().all()) {
                 for(EntityId entity_id : component().updated()) {
                     sys->entityUpdated(entity_id, component().bits(entity_id));
                 }
+            }
+
+            component().updated().clear();
+
+            for(System* sys : system().all()) {
                 sys->update();
             }
+
             postUpdate();
-            component().updated().clear();
         }
     }
 

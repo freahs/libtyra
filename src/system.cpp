@@ -22,6 +22,7 @@
 #include "world.hpp"
 
 #include <bitset>
+#include <iostream>
 
 namespace tyra {
 
@@ -60,7 +61,7 @@ namespace tyra {
             return;
         }
 
-        for (size_t i = 0; i < world().component().size(); ++i) {
+        for (size_t i = 0; i < MAX_COMPONENT_TYPES; ++i) {
             if (m_exclude_components[i] && entity_components[i]) { has_excluded = true; break; }
             if (m_require_all_components[i] && !entity_components[i]) { has_all = false; break; }
             if (m_require_one_components[i] && entity_components[i]) has_one = true;

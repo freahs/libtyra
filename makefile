@@ -9,7 +9,7 @@ _OBJ = world.o system.o entitymanager.o componentmanager.o systemmanager.o
 OBJ = $(patsubst %,$(OBJ_DIR)/%,$(_OBJ))
 
 #fdiagnostics requirec gcc 4.9+
-CC_FLAGS=-fdiagnostics-color=always -std=c++11 -Wall -pedantic -DNDEBUG
+CC_FLAGS=-fdiagnostics-color=always -std=c++11 -O3 -Wall -pedantic -DNDEBUG
 
 CC=$(CXX)
 
