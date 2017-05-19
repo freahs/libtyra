@@ -5,22 +5,33 @@ SRC_DIR=src
 OBJ_DIR=obj
 LIB_DIR=lib
 
-_OBJ = world.o system.o entitymanager.o componentmanager.o systemmanager.o
-OBJ = $(patsubst %,$(OBJ_DIR)/%,$(_OBJ))
+CXX = clang++
+CXX_FLAGS = -fdiagnostics-color=always -std=c++11 -O3 -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow
 
-#fdiagnostics requirec gcc 4.9+
-CC_FLAGS=-fdiagnostics-color=always -std=c++11 -O3 -Wall -pedantic -DNDEBUG
+BUILD_DIR = ./build
 
-CC=$(CXX)
+CPP = $(wildcard src/*.cpp)
+OBJ = $(CPP:%.cpp=$(BUILD_DIR)/%.o)
+DEP = $(OBJ:%.o=%.d)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC_DIR)/%.hpp
-	$(CC) $(CC_FLAGS) -I $(INC_DIR) -c $< -o $@
+all: $(LIB_NAME)
+	cd test && $(MAKE)
 
-all: $(OBJ)
-	ar rcs $(LIB_DIR)/$(LIB_NAME) $^
+$(LIB_NAME) : $(LIB_DIR)/$(LIB_NAME)
 
-.PHONY: clean
+$(LIB_DIR)/$(LIB_NAME) : $(OBJ)
+	mkdir -p $(@D)
+	llvm-ar rcs $(LIB_DIR)/$(LIB_NAME) $^
+
+-include $(DEP)
+
+$(BUILD_DIR)/%.o : %.cpp
+	mkdir -p $(@D)
+	$(CXX) $(CXX_FLAGS) -I $(INC_DIR) -MMD -c $< -o $@
+
+
+.PHONY : clean
 
 clean:
-	rm -f $(OBJ_DIR)/*.o
-	rm -f $(LIB_DIR)/$(LIB_NAME)
+	-rm $(LIB_DIR)/$(LIB_NAME) $(OBJ) $(DEP)
+	cd test && $(MAKE) clean
