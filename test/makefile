@@ -4,7 +4,6 @@ BIN_DIR=./bin
 LIB_DIR=../lib
 BUILD_DIR=../build/test
 
-CXX = g++
 CXX_FLAGS = -fdiagnostics-color=always -std=c++11 -O3 -Wfatal-errors -Wall -Wextra -pedantic -Wconversion -Wshadow
 
 CPP = $(wildcard *_test.cpp)
