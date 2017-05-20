@@ -31,23 +31,27 @@ namespace tyra {
     }
 
     void ComponentManager::add(EntityId entity_id, TypeId type_id, Component* component_ptr) {
+        // TODO: fix types
         if (static_cast<size_t>(type_id) <= m_num_registered_components) {
-            m_num_registered_components = static_cast<size_t>(type_id) + 1;
+            m_num_registered_components = static_cast<size_t>(type_id + 1);
         }
 
         EntityIndex entity_index = EntityManager::index(entity_id);
 
+        // TODO: fix resize method
         if (m_components.size() < static_cast<size_t>(entity_index + 1)) {
             m_components.resize(entity_index + 100);
-            m_components_bits.resize(entity_index + 100);
+            m_component_sets.resize(entity_index + 100);
         }
 
+        // TODO: fheck for equality
         if (m_components[entity_index][type_id] != nullptr) {
             delete m_components[entity_index][type_id];
         }
 
+        // TODO: update to smart pointers
         m_components[entity_index][type_id] = component_ptr;
-        m_components_bits[entity_index][type_id] = 1;
+        m_component_sets[entity_index].add(type_id);
 
         m_updated.insert(entity_id);
     }
@@ -60,31 +64,20 @@ namespace tyra {
         delete m_components[entity_index][type_id];
 
         m_components[entity_index][type_id] = nullptr;
-        m_components_bits[entity_index][type_id] = 0;
+        m_component_sets[entity_index].remove(type_id);
 
         m_updated.insert(entity_id);
     }
 
-    void ComponentManager::removeAll(EntityId entity_id) {
-        EntityIndex entity_index = EntityManager::index(entity_id);
-
-        for (size_t i = 0; i < m_components[entity_index].size(); ++i) {
-            m_components[entity_index][i] = nullptr;
-        }
-
-        m_components_bits[entity_index].reset();
-
-        m_updated.insert(entity_id);
-    }
 
     bool ComponentManager::valid(EntityId entity_id, TypeId type_id) const {
         EntityIndex entity_index = EntityManager::index(entity_id);
 
-        if (m_components_bits.size() < static_cast<size_t>(entity_index + 1)) {
+        if (m_component_sets.size() < static_cast<size_t>(entity_index + 1)) {
             return false;
         }
 
-        return m_components_bits[entity_index][type_id];
+        return m_component_sets[entity_index].contains(type_id);
     }
 
     Component* ComponentManager::get(EntityId entity_id, TypeId type_id) const {
@@ -92,8 +85,8 @@ namespace tyra {
         return m_components[entity_index][type_id];
     }
 
-    std::bitset<MAX_COMPONENT_TYPES>& ComponentManager::bits(EntityId entity_id){
-        return m_components_bits[EntityManager::index(entity_id)];
+    const ComponentSet::container_type& ComponentManager::bits(EntityId entity_id) const {
+        return m_component_sets[entity_id].bits();
     } 
 
 }
