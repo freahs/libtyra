@@ -20,6 +20,7 @@ $(BIN_DIR)/% : $(BUILD_DIR)/main.o $(BUILD_DIR)/%.o
 -include $(DEP)
 
 $(BUILD_DIR)/main.o: main.cpp
+	@mkdir -p $(@D)
 	$(CXX) $(CXX_FLAGS) $^ -c -o $@ 
 
 $(BUILD_DIR)/%.o : %.cpp
