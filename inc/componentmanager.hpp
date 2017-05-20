@@ -17,7 +17,7 @@
 #ifndef TYRA_COMPONENTMANAGER_H
 #define TYRA_COMPONENTMANAGER_H
 
-#include "entitymanager.hpp"
+#include "config.hpp"
 #include "manager.hpp"
 #include "typeid.hpp"
 
@@ -27,12 +27,10 @@
 #include <unordered_set>
 #include <vector>
 
-
 #include <iostream>
 
 namespace tyra {
 
-    const std::size_t MAX_COMPONENT_TYPES = UINT8_MAX;
 
     struct Component {
             virtual ~Component() { }
