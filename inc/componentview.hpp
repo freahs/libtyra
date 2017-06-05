@@ -88,18 +88,6 @@ namespace tyra {
     }
 
     bool ComponentView::interested(const ComponentSet& s) {
-        /*
-        std::cout << "all: " << m_require_all.m_bits << std::endl;
-        std::cout << "any: " << m_require_one.m_bits << std::endl;
-        std::cout << "exc: " << m_exclude.m_bits << std::endl;
-        std::cout << "oth: " << s.m_bits << std::endl;
-        std::cout << "all empty = " << m_require_all.empty() << std::endl;
-        std::cout << "all cond  = " << !s.contains_all(m_require_all) << std::endl;
-        std::cout << "exc empty = " << m_exclude.empty() << std::endl;
-        std::cout << "exc cond  = " << s.contains_any(m_exclude) << std::endl;
-        std::cout << "any empty = " << m_require_one.empty() << std::endl;
-        std::cout << "any cond  = " << !s.contains_any(m_require_one) << std::endl;
-        */
         if(!m_require_all.empty() && !s.contains_all(m_require_all)) {
             return false;
         }
