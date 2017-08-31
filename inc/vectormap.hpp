@@ -6,16 +6,24 @@
 
 namespace tyra {
 
+    template<class T> class VectorMap;
+    template<class T> void swap(VectorMap<T>&, VectorMap<T>&);
+
     template<class T> class VectorMap {
     private:
         std::vector<T>                  m_vector;
         std::unordered_map<T, size_t>   m_map;
 
     public:
+        typedef typename std::vector<T>::iterator       iterator;
         typedef typename std::vector<T>::const_iterator const_iterator;
         typedef typename std::vector<T>::value_type     value_type;
 
         VectorMap() = default;
+        VectorMap(const VectorMap<T>& other);
+        VectorMap(VectorMap<T>&& other);
+
+        VectorMap<T>& operator=(VectorMap<T> other);
 
         const_iterator begin() const;
         const_iterator end() const;
@@ -26,7 +34,24 @@ namespace tyra {
         bool erase(const T& val);
 
         size_t size() const;
+
+        friend void swap<>(VectorMap<T>&, VectorMap<T>&);
     };
+
+    template<class T>  VectorMap<T>::VectorMap(const VectorMap<T>& other) {
+        m_vector = other.m_vector;
+        m_map = other.m_map;
+    }
+
+    template<class T>  VectorMap<T>::VectorMap(VectorMap<T>&& other) {
+        m_vector = std::move(other.m_vector);
+        m_map = std::move(other.m_map);
+    }
+
+    template<class T> VectorMap<T>& VectorMap<T>::operator=(VectorMap<T> other) {
+        swap(*this, other);
+        return *this;
+    }
 
     template<class T> typename VectorMap<T>::const_iterator VectorMap<T>::begin() const {
         return m_vector.begin();
@@ -70,6 +95,11 @@ namespace tyra {
 
     template<class T> size_t VectorMap<T>::size() const {
         return m_vector.size();
+    }
+
+    template<class T> void swap(VectorMap<T>& first, VectorMap<T>& second) {
+        std::swap(first.m_vector, second.m_vector);
+        std::swap(first.m_map, second.m_map);
     }
 
 }
