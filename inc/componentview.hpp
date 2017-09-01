@@ -35,6 +35,7 @@ namespace tyra {
         ComponentSet    m_exclude;
 
     public:
+        virtual ~ComponentView() { }
         template<typename T> ComponentView& requireOne();
         template<typename T1, typename T2, typename... Ts> ComponentView& requireOne();
         template<typename T> ComponentView& requireAll();
@@ -48,82 +49,49 @@ namespace tyra {
 
     };
 
-    template<typename T> ComponentView& ComponentView::requireOne() {
+    template<typename T>
+    ComponentView& ComponentView::requireOne() {
         TypeId type_id = Type<Component>::id<T>();
         m_require_one.add(type_id);
         return *this;
     }
 
-    template<typename T1, typename T2, typename... Ts> ComponentView& ComponentView::requireOne() {
+    template<typename T1, typename T2, typename... Ts>
+    ComponentView& ComponentView::requireOne() {
         TypeId type_id = Type<Component>::id<T1>();
         m_require_one.add(type_id);
         requireOne<T2, Ts...>();
         return *this;
     }
 
-    template<typename T> ComponentView& ComponentView::requireAll() {
+    template<typename T>
+    ComponentView& ComponentView::requireAll() {
         TypeId type_id = Type<Component>::id<T>();
         m_require_all.add(type_id);
         return *this;
     }
 
-    template<typename T1, typename T2, typename... Ts> ComponentView& ComponentView::requireAll() {
+    template<typename T1, typename T2, typename... Ts>
+    ComponentView& ComponentView::requireAll() {
         TypeId type_id = Type<Component>::id<T1>();
         m_require_all.add(type_id);
         requireAll<T2, Ts...>();
         return *this;
     }
 
-    template<typename T> ComponentView& ComponentView::exclude() {
+    template<typename T>
+    ComponentView& ComponentView::exclude() {
         TypeId type_id = Type<Component>::id<T>();
         m_exclude.add(type_id);
         return *this;
     }
 
-    template<typename T1, typename T2, typename... Ts> ComponentView& ComponentView::exclude() {
+    template<typename T1, typename T2, typename... Ts>
+    ComponentView& ComponentView::exclude() {
         TypeId type_id = Type<Component>::id<T1>();
         m_exclude.add(type_id);
         exclude<T2, Ts...>();
         return *this;
-    }
-
-    bool ComponentView::interested(const ComponentSet& s) {
-        /*
-        std::cout << "all: " << m_require_all.m_bits << std::endl;
-        std::cout << "any: " << m_require_one.m_bits << std::endl;
-        std::cout << "exc: " << m_exclude.m_bits << std::endl;
-        std::cout << "oth: " << s.m_bits << std::endl;
-        std::cout << "all empty = " << m_require_all.empty() << std::endl;
-        std::cout << "all cond  = " << !s.contains_all(m_require_all) << std::endl;
-        std::cout << "exc empty = " << m_exclude.empty() << std::endl;
-        std::cout << "exc cond  = " << s.contains_any(m_exclude) << std::endl;
-        std::cout << "any empty = " << m_require_one.empty() << std::endl;
-        std::cout << "any cond  = " << !s.contains_any(m_require_one) << std::endl;
-        */
-        if(!m_require_all.empty() && !s.contains_all(m_require_all)) {
-            return false;
-        }
-        if(!m_exclude.empty() && s.contains_any(m_exclude)) {
-            return false;
-        }
-        if(!m_require_one.empty() && !s.contains_any(m_require_one)) {
-            return false;
-        }
-        return true;
-    }
-
-    bool ComponentView::operator==(const ComponentView& other) const {
-        if (m_require_one != other.m_require_one)
-            return false;
-        if (m_require_all != other.m_require_all)
-            return false;
-        if (m_exclude != other.m_exclude)
-            return false;
-        return true;
-    }
-
-    bool ComponentView::operator!=(const ComponentView& other) const {
-        return !operator==(other);
     }
 }
 

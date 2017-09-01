@@ -1,11 +1,27 @@
+/**
+ * Copyright 2017 Fredrik Åhs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef TYRA_COMPONENTSET_H
+#define TYRA_COMPONENTSET_H
+
 #include "config.hpp"
 #include "typeid.hpp"
 
 #include <bitset>
 #include <cstdint>
-
-#ifndef TYRA_COMPONENTSET_H
-#define TYRA_COMPONENTSET_H
 
 namespace tyra {
 
@@ -40,88 +56,6 @@ namespace tyra {
         bool operator!=(const ComponentSet& other) const;
     };
 
-    const ComponentSet::container_type& ComponentSet::bits() const {
-        return m_bits;
-    }
-
-    /*
-    template<typename T>
-        ComponentSet ComponentSet::build() {
-            container_type set;
-            build<T>(set);
-            return ComponentSet(set);
-        }
-
-    template<typename T>
-        void ComponentSet::build(container_type& c) {
-            TypeId id = Type<Component>::id<T>();
-            c[id] = 1;
-        }
-
-    template<typename T1, typename T2, typename... Ts>
-        ComponentSet ComponentSet::build() {
-            container_type set;
-            build<T1, T2, Ts...>(set);
-            return ComponentSet(set);
-        }
-
-    template<typename T1, typename T2, typename... Ts>
-        void ComponentSet::build(container_type& c) {
-            TypeId id = Type<Component>::id<T1>();
-            c[id] = 1;
-            build<T2, Ts...>(c);
-        }
-
-    */
-    ComponentSet& ComponentSet::add(const TypeId& type_id) {
-        m_bits[type_id] = 1;
-        return *this;
-    }
-
-    ComponentSet& ComponentSet::remove(const TypeId& type_id) {
-        m_bits[type_id] = 0;
-        return *this;
-    }
-
-    bool ComponentSet::contains(const TypeId& type_id) const {
-        if (static_cast<size_t>(type_id) >= m_bits.size()) {
-            return false;
-        }
-        return m_bits[type_id];
-    }
-
-    bool ComponentSet::contains_all(const ComponentSet& other) const {
-        if(this->m_bits.any() && (this->m_bits & other.m_bits) != other.m_bits) {
-            return false;
-        }
-        return true;
-    }
-
-    bool ComponentSet::contains_any(const ComponentSet& other) const {
-        if(this->m_bits.any() && (this->m_bits & other.m_bits).none()) {
-            return false;
-        }
-        return true;
-    }
-
-    bool ComponentSet::contains_none(const ComponentSet& other) const {
-        if(this->m_bits.any() && (this->m_bits & other.m_bits).any()) {
-            return false;
-        }
-        return true;
-    }
-
-    bool ComponentSet::empty() const {
-        return m_bits.none();
-    }
-
-    bool ComponentSet::operator==(const ComponentSet& other) const {
-        return m_bits == other.m_bits;
-    }
-
-    bool ComponentSet::operator!=(const ComponentSet& other) const {
-        return !operator==(other);
-    }
 }
 
 #endif

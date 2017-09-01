@@ -85,7 +85,7 @@ namespace tyra {
     template <typename T> T& ComponentManager::get(EntityId entity_id) const {
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::get: T must be derived from Component");
         TypeId type_id = Type<Component>::id<T>();
-        return get(entity_id, type_id);
+        return static_cast <T&>(*get(entity_id, type_id));
     }
 
 
