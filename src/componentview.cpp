@@ -4,6 +4,9 @@
 namespace tyra {
 
     bool ComponentView::interested(const ComponentSet& s) {
+        if(m_require_all.empty() && m_exclude.empty() && m_require_one.empty()) {
+            return false;
+        }
         if(!m_require_all.empty() && !s.contains_all(m_require_all)) {
             return false;
         }
@@ -11,6 +14,9 @@ namespace tyra {
             return false;
         }
         if(!m_require_one.empty() && !s.contains_any(m_require_one)) {
+            return false;
+        }
+        if(s.empty()) {
             return false;
         }
         return true;
