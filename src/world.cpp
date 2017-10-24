@@ -21,6 +21,8 @@
 #include "system.hpp"
 #include "systemmanager.hpp"
 
+#include "logger.hpp"
+
 #include <chrono>
 #include <cstdlib>
 
@@ -30,6 +32,7 @@ namespace tyra {
         m_component_manager(new ComponentManager()),
         m_entity_manager(new EntityManager()),
         m_system_manager(new SystemManager()),
+        m_processing(false),
         m_prev_update(Time::now()),
         m_delta(0) {
             m_component_manager->world(*this);
@@ -44,6 +47,10 @@ namespace tyra {
     }
 
     void World::update() {
+        init_loggers();
+        auto logg = spdlog::get("world");
+        logg->set_level(spdlog::level::debug);
+
         TimePoint time_now = Time::now();
         m_delta = std::chrono::duration_cast<Ms>(time_now - m_prev_update).count();
         m_prev_update = time_now;

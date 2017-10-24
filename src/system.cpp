@@ -24,9 +24,14 @@
 #include <bitset>
 #include <iostream>
 
+#include "logger.hpp"
+
 namespace tyra {
 
     void System::entityUpdated(EntityId id, const ComponentSet& entity_components) {
+        tyra::init_loggers();
+        auto logg = spdlog::get("system");
+        logg->set_level(spdlog::level::debug);
         bool present = m_entities.find(id) != m_entities.end();
         if (interested(entity_components)) {
             if (present) {
