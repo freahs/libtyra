@@ -4,7 +4,7 @@ BIN_DIR=./bin
 LIB_DIR=../lib
 BUILD_DIR=../build/test
 
-CXX_FLAGS = -fdiagnostics-color=always -std=c++11 -O3 -Wfatal-errors -Wall -Wextra -pedantic -Wconversion -Wshadow
+CXX_FLAGS = -fdiagnostics-color=always -std=c++14 -O3 -Wfatal-errors -Wall -Wextra -pedantic -Wconversion -Wshadow -pthread
 
 CPP = $(wildcard *_test.cpp)
 BIN = $(CPP:%.cpp=$(BIN_DIR)/%)
