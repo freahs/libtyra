@@ -53,6 +53,7 @@ TEST_CASE( "Building", "[componentview]" ) {
         auto c3 = tyra::ComponentView().requireOne<C1,C2,C3>();
         auto c4 = tyra::ComponentView().exclude<C1,C2,C3>();
         tyra::ComponentView c5;
+        auto c6 = tyra::ComponentView().requireAll<C1>();
 
         REQUIRE(c1.interested(s1) == false);
         REQUIRE(c1.interested(s2) == false);
@@ -71,8 +72,10 @@ TEST_CASE( "Building", "[componentview]" ) {
         REQUIRE(c4.interested(s2) == false);
         REQUIRE(c4.interested(s5) == true);
 
-        REQUIRE(c5.interested(s1) == true);
-        REQUIRE(c5.interested(s6) == true);
+        REQUIRE(c5.interested(s1) == false);
+        REQUIRE(c5.interested(s6) == false);
+
+        REQUIRE(c6.interested(s6) == false);
 
     }
 
