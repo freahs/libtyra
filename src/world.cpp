@@ -21,8 +21,6 @@
 #include "system.hpp"
 #include "systemmanager.hpp"
 
-#include "logger.hpp"
-
 #include <chrono>
 #include <cstdlib>
 
@@ -46,10 +44,16 @@ namespace tyra {
         delete m_system_manager;
     }
 
+    void World::notify_systems() {
+        for(System* sys : system().all()) {
+            for(EntityId entity_id : component().updated()) {
+                sys->updated().insert(entity_id);
+            }
+        }
+        component().updated().clear();
+    }
+
     void World::update() {
-        init_loggers();
-        auto logg = spdlog::get("world");
-        logg->set_level(spdlog::level::debug);
 
         TimePoint time_now = Time::now();
         m_delta = std::chrono::duration_cast<Ms>(time_now - m_prev_update).count();
@@ -58,16 +62,15 @@ namespace tyra {
         if (processing()) {
             preUpdate();
 
+
+            notify_systems();
             for(System* sys : system().all()) {
-                for(EntityId entity_id : component().updated()) {
+                for (EntityId entity_id : sys->updated()) {
                     sys->entityUpdated(entity_id, component().bits(entity_id));
                 }
-            }
-
-            component().updated().clear();
-
-            for(System* sys : system().all()) {
+                sys->updated().clear();
                 sys->update();
+                notify_systems();
             }
 
             postUpdate();
