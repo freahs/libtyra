@@ -4,19 +4,23 @@ BIN_DIR=./bin
 LIB_DIR=../lib
 BUILD_DIR=../build/test
 
-CXX_FLAGS = -fdiagnostics-color=always -std=c++14 -O3 -Wfatal-errors -Wall -Wextra -pedantic -Wconversion -Wshadow -pthread
+CXX_FLAGS = -fdiagnostics-color=always -std=c++14 -O3 -Wfatal-errors -Wall -Wextra -pedantic -Wconversion -Wshadow -pthread -g
 
 CPP = $(wildcard *_test.cpp)
 BIN = $(CPP:%.cpp=$(BIN_DIR)/%)
 DEP = $(CPP:%.cpp=$(BUILD_DIR)/%.d)
+LTDEP = $(wildcard ../build/src/*.d)
+LT = $(wildcard ../build/src/*.o)
+
 
 all: $(BIN)
 
 $(BIN_DIR)/% : $(BUILD_DIR)/main.o $(BUILD_DIR)/%.o
 	@mkdir -p $(@D)
-	$(CXX) $(CXX_FLAGS) -I $(INC_DIR) -L $(LIB_DIR) $^ -ltyra -o $@
+	$(CXX) $(CXX_FLAGS) -I $(INC_DIR) $^ $(LT) -o $@
+#	$(CXX) $(CXX_FLAGS) -I $(INC_DIR) -L $(LIB_DIR) $^ -ltyra -o $@
 
--include $(DEP)
+-include $(DEP) $(LTDEP)
 
 $(BUILD_DIR)/main.o: main.cpp
 	@mkdir -p $(@D)
