@@ -6,7 +6,7 @@ OBJ_DIR=obj
 LIB_DIR=lib
 BUILD_DIR = ./build
 
-CXX_FLAGS = -fdiagnostics-color=always -std=c++14 -O3 -Wfatal-errors -Wall -pthread -Wextra -pedantic -Wconversion -Wshadow
+CXX_FLAGS = -fdiagnostics-color=always -std=c++14 -O3 -Wfatal-errors -Wall -pthread -Wextra -pedantic -Wconversion -Wshadow -g
 
 
 CPP = $(wildcard src/*.cpp)
@@ -14,7 +14,7 @@ OBJ = $(CPP:%.cpp=$(BUILD_DIR)/%.o)
 DEP = $(OBJ:%.o=%.d)
 
 all: $(LIB_NAME)
-	cd test && $(MAKE)
+	cd test && $(MAKE) clean && $(MAKE)
 
 $(LIB_NAME) : $(LIB_DIR)/$(LIB_NAME)
 
