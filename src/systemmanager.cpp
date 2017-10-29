@@ -30,6 +30,7 @@ namespace tyra {
             m_systems.resize(system_index + 1);
         }
         m_systems[system_index] = system_ptr;
+        system_ptr->init();
     }
 
     System* SystemManager::get(TypeId type_id) {
