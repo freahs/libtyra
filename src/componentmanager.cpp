@@ -32,7 +32,7 @@ namespace tyra {
 
     void ComponentManager::add(EntityId entity_id, TypeId type_id, Component* component_ptr) {
         if (valid(entity_id, type_id)) {
-            throw error::ComponentError("Component already present", entity_id, type_id);
+            throw error::ComponentError("ComponentManager::add: Component already present (1)", entity_id, type_id);
         }
 
         // TODO: fix types
@@ -50,7 +50,7 @@ namespace tyra {
 
         // TODO: Check for equality
         if (m_components[entity_index][type_id] != nullptr) {
-            throw error::ComponentError("Component already present", entity_id, type_id);
+            throw error::ComponentError("ComponentManager::add: Component already present (2)", entity_id, type_id);
         }
 
         // TODO: update to smart pointers
@@ -62,7 +62,7 @@ namespace tyra {
 
     void ComponentManager::remove(EntityId entity_id, TypeId type_id) {
         if (!valid(entity_id, type_id)) {
-            throw error::ComponentError("Component not present", entity_id, type_id);
+            throw error::ComponentError("ComponentManager::remove: Component not present", entity_id, type_id);
         }
 
         EntityIndex entity_index = EntityManager::index(entity_id);
@@ -87,12 +87,16 @@ namespace tyra {
     }
 
     Component* ComponentManager::get(EntityId entity_id, TypeId type_id) const {
+        if (!valid(entity_id, type_id)) {
+            throw error::ComponentError("ComponentManager::get: Component not present", entity_id, type_id);
+        }
         EntityIndex entity_index = EntityManager::index(entity_id);
         return m_components[entity_index][type_id];
     }
 
-    const ComponentSet::container_type& ComponentManager::bits(EntityId entity_id) const {
-        return m_component_sets[entity_id].bits();
+    const ComponentSet& ComponentManager::bits(EntityId entity_id) const {
+        EntityIndex entity_index = EntityManager::index(entity_id);
+        return m_component_sets[entity_index];
     } 
 
 }
