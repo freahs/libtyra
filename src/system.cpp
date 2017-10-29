@@ -18,29 +18,24 @@
 
 #include "assert.hpp"
 #include "componentmanager.hpp"
+#include "entitymanager.hpp"
 #include "typeid.hpp"
 #include "world.hpp"
 
 #include <bitset>
 #include <iostream>
 
-#include "logger.hpp"
+#include <sstream>
 
 namespace tyra {
 
     void System::entityUpdated(EntityId id, const ComponentSet& entity_components) {
-        tyra::init_loggers();
-        auto logg = spdlog::get("system");
-        logg->set_level(spdlog::level::debug);
-        bool present = m_entities.find(id) != m_entities.end();
-        if (interested(entity_components)) {
-            if (present) {
-                entityUpdated(id);
-            } else {
-                m_entities.insert(id);
-                entityAdded(id);
-            }
-        } else if (present) {
+        bool p = m_entities.find(id) != m_entities.end();
+        bool i = interested(entity_components);
+        if (i && !p) {
+            m_entities.insert(id);
+            entityAdded(id);
+        } else if (!i && p) {
             m_entities.erase(id);
             entityRemoved(id);
         }
