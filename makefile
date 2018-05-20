@@ -1,36 +1,74 @@
-LIB_NAME=libtyra.a
+LIBNAME := libtyra.a
+LIBDIR := lib
 
-INC_DIR=inc
-SRC_DIR=src
-OBJ_DIR=obj
-LIB_DIR=lib
-BUILD_DIR = ./build
+TBINDIR := bin/test
+TESTDIR := test
+SRCDIR := src
+INCDIR := inc
+OBJDIR := .objs
+DEPDIR := .deps
 
-CXX_FLAGS = -fdiagnostics-color=always -std=c++14 -O3 -Wfatal-errors -Wall -pthread -Wextra -pedantic -Wconversion -Wshadow -g
+SRCS := $(notdir $(wildcard $(SRCDIR)/*.cpp))   # All the source files
+OBJS := $(SRCS:%.cpp=$(OBJDIR)/%.o)             # All the object files
+TSRCS := $(notdir $(wildcard $(TESTDIR)/test_*.cpp))
+TBINS := $(TSRCS:%.cpp=$(TBINDIR)/%)
 
+$(shell mkdir -p $(DEPDIR) >/dev/null)
 
-CPP = $(wildcard src/*.cpp)
-OBJ = $(CPP:%.cpp=$(BUILD_DIR)/%.o)
-DEP = $(OBJ:%.o=%.d)
+CXX := g++
 
-all: $(LIB_NAME)
-	cd test && $(MAKE) clean && $(MAKE)
+CXXFLAGS = -std=c++14 -I $(INCDIR) -I . -fdiagnostics-color=always 
+CXXFLAGS += -Wall -Wextra -Wpedantic -Weffc++
+CXXFLAGS += -Wfatal-errors -Wwrite-strings -Wno-parentheses -Warray-bounds -Wconversion -Wshadow
+RELFLAGS := -O3
+DBGFLAGS := -g
+DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
-$(LIB_NAME) : $(LIB_DIR)/$(LIB_NAME)
+COMPILE = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(CXXFLAGS2) $(TARGET_ARCH)
+POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 
-$(LIB_DIR)/$(LIB_NAME) : $(OBJ)
+all: debug;
+
+tests: $(TBINS)
+
+test_%: $(TBINDIR)/%;
+
+$(TBINDIR)/%: debug
+$(TBINDIR)/%: CXXFLAGS+=$(DBGFLAGS)
+$(TBINDIR)/%: $(OBJS) $(OBJDIR)/main.o $(OBJDIR)/%.o
 	@mkdir -p $(@D)
-	llvm-ar rcs $(LIB_DIR)/$(LIB_NAME) $^
+	$(COMPILE) $(OUTPUT_OPTION) $^
 
--include $(DEP)
-
-$(BUILD_DIR)/%.o : %.cpp
+$(OBJDIR)/%.o: CXXFLAGS+=$(DBGFLAGS)
+$(OBJDIR)/%.o: $(TESTDIR)/%.cpp
 	@mkdir -p $(@D)
-	$(CXX) $(CXX_FLAGS) -I $(INC_DIR) -MMD -c $< -o $@
+	$(COMPILE) $(OUTPUT_OPTION) -c $<
+	$(POSTCOMPILE)
 
+debug: CXXFLAGS+=$(DBGFLAGS)
+debug: $(LIBDIR)/$(LIBNAME)
+release: CXXFLAGS+=$(RELFLAGS)
+release: $(LIBDIR)/$(LIBNAME)
 
-.PHONY : clean
+$(LIBDIR)/$(LIBNAME): $(OBJS)
+	@mkdir -p $(@D)
+	ar rsvc $(LIBDIR)/$(LIBNAME) $^
 
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(DEPDIR)/%.d
+	@mkdir -p $(@D)
+	$(COMPILE) $(OUTPUT_OPTION) -c $<
+	$(POSTCOMPILE)
+
+$(DEPDIR)/%.d: ;
+.PRECIOUS: $(DEPDIR)/%.d
+.PRECIOUS: $(OBJDIR)/%.o
+
+include $(wildcard $(patsubst %,$(DEPDIR)/%.d,$(basename $(SRCS))))
+
+.PHONY: clean
 clean:
-	-rm -fr $(LIB_DIR)/$(LIB_NAME) $(OBJ) $(DEP)
-	cd test && $(MAKE) clean
+	@rm -rf $(TBINDIR)
+	@rm -rf $(LIBDIR)
+	@rm -rf $(OBJDIR)
+	@rm -rf $(DEPDIR)
