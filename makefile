@@ -15,8 +15,6 @@ TBINS := $(TSRCS:%.cpp=$(TBINDIR)/%)
 
 $(shell mkdir -p $(DEPDIR) >/dev/null)
 
-CXX := g++
-
 CXXFLAGS = -std=c++14 -I $(INCDIR) -I . -fdiagnostics-color=always 
 CXXFLAGS += -Wall -Wextra -Wpedantic -Weffc++
 CXXFLAGS += -Wfatal-errors -Wwrite-strings -Wno-parentheses -Warray-bounds -Wconversion -Wshadow
