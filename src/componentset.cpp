@@ -3,10 +3,6 @@
 
 namespace tyra {
 
-    const ComponentSet::container_type& ComponentSet::bits() const {
-        return m_bits;
-    }
-
 	/*!
 	\brief Adds the component type to the component set
 	\param	type_id	The ::TypeId of the component

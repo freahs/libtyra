@@ -33,20 +33,11 @@ namespace tyra {
 	\details Component often appear in specific configurations and such configurations might appear in many locations. The ComponentSet makes it easy to reuse such configurations.
 	*/
     class ComponentSet {
-    public:
+    private:
         typedef std::bitset<MAX_COMPONENT_TYPES> container_type;
         container_type m_bits;
-        ComponentSet(container_type set) : m_bits(set) {} 
-
-        //template<typename T> static void build(container_type&); 
-        //template<typename T1, typename T2, typename... Ts> static void build(container_type&);
-
+        
     public:
-        ComponentSet() = default;
-        const container_type& bits() const;
-        //template<typename T> static ComponentSet build(); 
-        //template<typename T1, typename T2, typename... Ts> static ComponentSet build();
-
         ComponentSet& add(const TypeId&);
         ComponentSet& remove(const TypeId&);
 
