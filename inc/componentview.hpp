@@ -26,7 +26,9 @@
 #include <cstdint>
 
 namespace tyra {
-
+	/*!
+	\brief A ComponentView are used to determine whether a subscriber of this ComponentView would be interested in a specific Component or ComponentSet
+	*/
     class ComponentView {
 
     public:
@@ -49,6 +51,12 @@ namespace tyra {
 
     };
 
+	/*!
+	\brief Adds the Component type \a T to the `require one` category
+	\details A ComponentView with components `C1` and `C2` in it's `require any` category would be interested in a ComponentSet if it had any of `C1` and `C2` in it.
+	\tparam T The Component to add to the category
+	\return a reference to this ComponentView for method chaining
+	*/
     template<typename T>
     ComponentView& ComponentView::requireOne() {
         TypeId type_id = Type<Component>::id<T>();
@@ -56,6 +64,9 @@ namespace tyra {
         return *this;
     }
 
+	/*!
+	\overload
+	*/
     template<typename T1, typename T2, typename... Ts>
     ComponentView& ComponentView::requireOne() {
         TypeId type_id = Type<Component>::id<T1>();
@@ -64,6 +75,12 @@ namespace tyra {
         return *this;
     }
 
+	/*!
+	\brief Adds the Component type \a T to the `require all` category
+	\details A ComponentView with components `C1` and `C2` in it's `require all` category would be interested in a ComponentSet if it had both `C1` and `C2` in it.
+	\tparam T The Component to add to the category
+	\return a reference to this ComponentView for method chaining
+	*/
     template<typename T>
     ComponentView& ComponentView::requireAll() {
         TypeId type_id = Type<Component>::id<T>();
@@ -71,6 +88,9 @@ namespace tyra {
         return *this;
     }
 
+	/*!
+	\overload
+	*/
     template<typename T1, typename T2, typename... Ts>
     ComponentView& ComponentView::requireAll() {
         TypeId type_id = Type<Component>::id<T1>();
@@ -79,6 +99,12 @@ namespace tyra {
         return *this;
     }
 
+	/*!
+	\brief Adds the Component type \a T to the `exclude` category
+	\details A ComponentView with components `C1` and `C2` in it's `exclude` category would be interested in a ComponentSet if it neither `C1` nor `C2` in it.
+	\tparam T The Component to add to the category
+	\return a reference to this ComponentView for method chaining
+	*/
     template<typename T>
     ComponentView& ComponentView::exclude() {
         TypeId type_id = Type<Component>::id<T>();
@@ -86,6 +112,9 @@ namespace tyra {
         return *this;
     }
 
+	/*!
+	\overload
+	*/
     template<typename T1, typename T2, typename... Ts>
     ComponentView& ComponentView::exclude() {
         TypeId type_id = Type<Component>::id<T1>();
