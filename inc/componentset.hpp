@@ -28,6 +28,10 @@ namespace tyra {
 
     struct Component;
 
+	/*!
+	\brief Basically a bitset with some convenience methods to group component types
+	\details Component often appear in specific configurations and such configurations might appear in many locations. The ComponentSet makes it easy to reuse such configurations.
+	*/
     class ComponentSet {
     public:
         typedef std::bitset<MAX_COMPONENT_TYPES> container_type;
