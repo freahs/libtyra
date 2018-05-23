@@ -20,24 +20,25 @@
 #include "typeid.hpp"
 
 #include <cstdlib>
+#include <memory>
 
 namespace tyra {
 
-    void SystemManager::add(TypeId type_id, System* system_ptr) {
+    void SystemManager::add(TypeId type_id, std::unique_ptr<System> system_ptr) {
         system_ptr->world(world());
         size_t system_index = static_cast<size_t>(type_id);
         if (m_systems.size() < system_index + 1) {
             m_systems.resize(system_index + 1);
         }
-        m_systems[system_index] = system_ptr;
-        system_ptr->init();
+        m_systems[system_index] = std::move(system_ptr);
+		m_systems[system_index]->init();
     }
 
-    System* SystemManager::get(TypeId type_id) {
-        return m_systems[static_cast<size_t>(type_id)];
+    System& SystemManager::get(TypeId type_id) {
+        return *m_systems[static_cast<size_t>(type_id)];
     }
 
-    std::vector<System*>& SystemManager::all() {
+    std::vector<std::unique_ptr<System>>& SystemManager::all() {
         return m_systems;
     }
 }

@@ -20,6 +20,7 @@
 #include "manager.hpp"
 #include "typeid.hpp"
 
+#include <memory>
 #include <vector>
 
 namespace tyra {
@@ -29,27 +30,26 @@ namespace tyra {
 
     class SystemManager : public Manager {
         private:
-            std::vector<System*>    m_systems;
+            std::vector<std::unique_ptr<System>> m_systems;
 
-            void add(TypeId, System*);
-            System* get(TypeId);
+            void add(TypeId, std::unique_ptr<System>);
+            System& get(TypeId);
 
         public:
             template<typename T, typename... Args> void add(Args&&... args);
             template<typename T> T& get();
-            std::vector<System*>& all();
+            std::vector<std::unique_ptr<System>>& all();
     };
 
     template<typename T, typename... Args> void SystemManager::add(Args&&... args) {
         static_assert(std::is_base_of<System, T>::value, "SystemManager::addSystem: T must be derived from System.");
-        T* ptr = new T{std::forward<Args>(args)...};
         TypeId type_id = Type<System>::id<T>();
-        add(type_id, ptr);
+		add(type_id, std::make_unique<T>(std::forward<Args>(args)...));
     }
 
     template<typename T> T& SystemManager::get() {
         static_assert(std::is_base_of<System, T>::value, "SystemManager::getSystem: T must be derived from System");
-        return static_cast<T&>(*get(Type<System>::id<T>()));
+        return static_cast<T&>(get(Type<System>::id<T>()));
     }
 
 }

@@ -45,7 +45,7 @@ namespace tyra {
     }
 
     void World::notify_systems() {
-        for(System* sys : system().all()) {
+        for(auto& sys : system().all()) {
             for(EntityId entity_id : component().updated()) {
                 sys->updated().insert(entity_id);
             }
@@ -64,7 +64,7 @@ namespace tyra {
 
 
             notify_systems();
-            for(System* sys : system().all()) {
+            for(auto& sys : system().all()) {
                 for (EntityId entity_id : sys->updated()) {
                     sys->entityUpdated(entity_id, component().bits(entity_id));
                 }

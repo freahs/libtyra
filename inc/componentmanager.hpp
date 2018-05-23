@@ -23,6 +23,7 @@
 #include "typeid.hpp"
 
 #include <array>
+#include <memory>
 #include <stdexcept>
 #include <unordered_set>
 #include <vector>
@@ -37,30 +38,26 @@ namespace tyra {
             : runtime_error(msg), entity_id(eid), component_id(tid) {}
         };
     }
-
-
+	
     struct Component {
         virtual ~Component() { }
     };
 
     class ComponentManager : public Manager {
     private:
-        typedef std::array<Component*, MAX_COMPONENT_TYPES>	ComponentArray;
+        typedef std::array<std::unique_ptr<Component>, MAX_COMPONENT_TYPES>	ComponentArray;
 
         std::unordered_set<EntityId>    m_updated;
-
-        std::vector<ComponentArray>     m_components;
+        std::vector<ComponentArray>     m_component_arrays;
         std::vector<ComponentSet>       m_component_sets;
         size_t                          m_num_registered_components;
 
-        void add(EntityId, TypeId, Component*);
+        void add(EntityId, TypeId, std::unique_ptr<Component>);
         void remove(EntityId, TypeId);
         bool valid(EntityId, TypeId) const;
-        Component* get(EntityId, TypeId) const;
+        Component& get(EntityId, TypeId) const;
 
     public:
-        ~ComponentManager();
-
         template <typename T, typename... Args> void add(EntityId, Args&&...);
         template <typename T> void remove(EntityId);
         template <typename T> bool valid(EntityId) const;
@@ -74,8 +71,7 @@ namespace tyra {
     template <typename T, typename... Args>	void ComponentManager::add(EntityId entity_id, Args&&... args)	{
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::add: T must be derived from Component");
         TypeId type_id = Type<Component>::id<T>();
-        add(entity_id, type_id,  new T{std::forward<Args>(args)...});
-
+        add(entity_id, type_id, std::make_unique<T>(std::forward<Args>(args)...));
     }
 
     template <typename T> void ComponentManager::remove(EntityId entity_id) {
@@ -93,10 +89,8 @@ namespace tyra {
     template <typename T> T& ComponentManager::get(EntityId entity_id) const {
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::get: T must be derived from Component");
         TypeId type_id = Type<Component>::id<T>();
-        return static_cast <T&>(*get(entity_id, type_id));
+        return static_cast <T&>(get(entity_id, type_id));
     }
-
-
 }
 
 #endif
