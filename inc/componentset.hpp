@@ -18,7 +18,7 @@
 #define TYRA_COMPONENTSET_H
 
 #include "component.hpp"
-#include "config.hpp"
+#include "common.hpp"
 #include "typeid.hpp"
 
 #include <bitset>
@@ -49,6 +49,7 @@ namespace tyra {
 
         bool operator==(const ComponentSet& other) const;
         bool operator!=(const ComponentSet& other) const;
+		bool operator<(const ComponentSet& other) const;
         friend std::ostream& operator<<(std::ostream& os, const ComponentSet& cs) {
             os << cs.m_bits;
             return os;

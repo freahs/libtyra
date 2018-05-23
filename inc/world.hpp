@@ -17,16 +17,21 @@
 #ifndef TYRA_WORLD_H
 #define TYRA_WORLD_H
 
-#include "config.hpp"
+#include "common.hpp"
+#include "manager.hpp"
+#include "typeid.hpp"
+
+#include "componentmanager.hpp"
+#include "entitymanager.hpp"
+#include "systemmanager.hpp"
+
 
 #include <chrono>
 #include <map>
+#include <memory>
+#include <vector>
 
 namespace tyra {
-
-    class ComponentManager;
-    class EntityManager;
-    class SystemManager;
 
     class World {
     private:
@@ -34,14 +39,11 @@ namespace tyra {
         typedef std::chrono::milliseconds               Ms;
         typedef std::chrono::system_clock::time_point   TimePoint;
 
-
-        ComponentManager*   m_component_manager;
-        EntityManager*      m_entity_manager;
-        SystemManager*      m_system_manager;
         bool                m_processing;
         TimePoint           m_prev_update;
         int                 m_delta;
 
+        std::vector<std::unique_ptr<Manager>> m_managers;
         std::map<std::string, EntityId> m_tags;
 
         void notify_systems();
@@ -52,7 +54,7 @@ namespace tyra {
 
     public:
         World();
-        ~World();
+        virtual ~World() { }
 
         void start()            { m_processing = true; }
         void stop()             { m_processing = false; }
@@ -66,7 +68,27 @@ namespace tyra {
         EntityId tag(const std::string&) const;
         void tag(const std::string&, EntityId);
         int delta() const;
+
+        template<typename T, typename... Args> T& add_manager(Args&&... args);
+        template<typename T> T& get_manager();
     };
+
+    template<typename T, typename... Args> T& World::add_manager(Args&&... args) {
+        static_assert(std::is_base_of<Manager, T>::value, "World::add_manager: T must be derived from Manager.");
+        TypeId type_id = Type<Manager>::id<T>();
+        if (static_cast<size_t>(type_id) <= m_managers.size()) {
+            m_managers.resize(static_cast<size_t>(type_id + 1));
+        }
+        m_managers[type_id] = std::make_unique<T>(std::forward<Args>(args)...);
+        m_managers[type_id]->m_world = this;
+        return get_manager<T>();
+    }
+
+    template<typename T> T& World::get_manager() {
+        static_assert(std::is_base_of<Manager, T>::value, "World::get_manager: T must be derived from Manager");
+        TypeId type_id = Type<Manager>::id<T>();
+        return static_cast<T&>(*m_managers[type_id]);
+    }
 
 }
 

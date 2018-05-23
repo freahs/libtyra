@@ -19,8 +19,8 @@
 
 #include <iostream>
 #include "component.hpp"
+#include "common.hpp"
 #include "componentset.hpp"
-#include "config.hpp"
 #include "typeid.hpp"
 
 #include <bitset>

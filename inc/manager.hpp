@@ -22,16 +22,14 @@ namespace tyra {
 	class World;
 
 	class Manager {
+		friend class World;
+
 	private:
 		World* m_world;
 
 	protected:
 		World& world() { return *m_world; }
-
-	public:
 		Manager() : m_world(nullptr) { }
-		void world(World& world) { m_world = &world; }
 	};
 }
-
 #endif

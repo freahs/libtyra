@@ -17,8 +17,9 @@
 #ifndef TYRA_COMPONENTMANAGER_H
 #define TYRA_COMPONENTMANAGER_H
 
+#include "component.hpp"
 #include "componentset.hpp"
-#include "config.hpp"
+#include "common.hpp"
 #include "manager.hpp"
 #include "typeid.hpp"
 
@@ -38,10 +39,6 @@ namespace tyra {
             : runtime_error(msg), entity_id(eid), component_id(tid) {}
         };
     }
-	
-    struct Component {
-        virtual ~Component() { }
-    };
 
     class ComponentManager : public Manager {
     private:

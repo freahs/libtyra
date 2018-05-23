@@ -20,29 +20,22 @@
 #include "entitymanager.hpp"
 #include "system.hpp"
 #include "systemmanager.hpp"
+#include "typeid.hpp"
 
 #include <chrono>
 #include <cstdlib>
+#include <memory>
 
 namespace tyra {
 
     World::World() :
-        m_component_manager(new ComponentManager()),
-        m_entity_manager(new EntityManager()),
-        m_system_manager(new SystemManager()),
         m_processing(false),
         m_prev_update(Time::now()),
         m_delta(0) {
-            m_component_manager->world(*this);
-            m_entity_manager->world(*this);
-            m_system_manager->world(*this);
+            add_manager<ComponentManager>();
+            add_manager<EntityManager>();
+            add_manager<SystemManager>();
         }
-
-    World::~World() {
-        delete m_component_manager;
-        delete m_entity_manager;
-        delete m_system_manager;
-    }
 
     void World::notify_systems() {
         for(auto& sys : system().all()) {
@@ -77,9 +70,9 @@ namespace tyra {
         }
     }
 
-    EntityManager& World::entity()         { return *m_entity_manager; }
-    ComponentManager& World::component()   { return *m_component_manager; }
-    SystemManager& World::system()         { return *m_system_manager; }
+    EntityManager& World::entity()         { return get_manager<EntityManager>(); }
+    ComponentManager& World::component()   { return get_manager<ComponentManager>(); }
+    SystemManager& World::system()         { return get_manager<SystemManager>(); }
 
     EntityId World::tag(const std::string& tag) const {
         auto res = m_tags.find(tag);

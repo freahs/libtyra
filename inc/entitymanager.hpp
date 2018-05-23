@@ -17,7 +17,7 @@
 #ifndef TYRA_ENTITYMANAGER_H
 #define TYRA_ENTITYMANAGER_H
 
-#include "config.hpp"
+#include "common.hpp"
 #include "manager.hpp"
 
 #include <cstdint>

@@ -88,4 +88,8 @@ namespace tyra {
         return !operator==(other);
     }
 
+	bool ComponentSet::operator<(const ComponentSet& other) const {
+		return m_bits.to_ullong() < other.m_bits.to_ullong();
+	}
+
 }
