@@ -23,11 +23,9 @@
 #include "typeid.hpp"
 
 #include <array>
+#include <stdexcept>
 #include <unordered_set>
 #include <vector>
-#include <stdexcept>
-
-#include <iostream>
 
 namespace tyra {
 
