@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "componentmanager.hpp"
+#include "component.hpp"
 #include "componentview.hpp"
 #include "componentset.hpp"
 

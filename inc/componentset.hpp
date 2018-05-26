@@ -17,6 +17,7 @@
 #ifndef TYRA_COMPONENTSET_H
 #define TYRA_COMPONENTSET_H
 
+#include "component.hpp"
 #include "config.hpp"
 #include "typeid.hpp"
 
@@ -25,8 +26,6 @@
 #include <iostream>
 
 namespace tyra {
-
-    struct Component;
 
 	/*!
 	\brief Basically a bitset with some convenience methods to group component types

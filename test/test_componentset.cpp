@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
+#include "component.hpp"
 #include "componentset.hpp"
-#include "componentmanager.hpp"
 #include "typeid.hpp"
 
 TEST_CASE( "Building", "[componentset]" ) {

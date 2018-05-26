@@ -1,5 +1,6 @@
 #include "catch.hpp"
 
+#include "component.hpp"
 #include "tyra.hpp"
 
 #include <memory>

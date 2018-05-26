@@ -1,6 +1,7 @@
 
 #include "catch.hpp"
 
+#include "component.hpp"
 #include "system.hpp"
 #include "world.hpp"
 #include "entitymanager.hpp"

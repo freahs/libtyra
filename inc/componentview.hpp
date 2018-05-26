@@ -18,8 +18,9 @@
 #define TYRA_COMPONENTVIEW_H
 
 #include <iostream>
-#include "config.hpp"
+#include "component.hpp"
 #include "componentset.hpp"
+#include "config.hpp"
 #include "typeid.hpp"
 
 #include <bitset>
