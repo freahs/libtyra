@@ -43,13 +43,13 @@ namespace tyra {
 
     template<typename T, typename... Args> void SystemManager::add(Args&&... args) {
         static_assert(std::is_base_of<System, T>::value, "SystemManager::addSystem: T must be derived from System.");
-        TypeId type_id = Type<System>::id<T>();
-		add(type_id, std::make_unique<T>(std::forward<Args>(args)...));
+        TypeId tid = type_id<System, T>::value;
+		add(tid, std::make_unique<T>(std::forward<Args>(args)...));
     }
 
     template<typename T> T& SystemManager::get() {
         static_assert(std::is_base_of<System, T>::value, "SystemManager::getSystem: T must be derived from System");
-        return static_cast<T&>(get(Type<System>::id<T>()));
+        return static_cast<T&>(get(type_id<System, T>::value));
     }
 
 }

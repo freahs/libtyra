@@ -75,19 +75,19 @@ namespace tyra {
 
     template<typename T, typename... Args> T& World::add_manager(Args&&... args) {
         static_assert(std::is_base_of<Manager, T>::value, "World::add_manager: T must be derived from Manager.");
-        TypeId type_id = Type<Manager>::id<T>();
-        if (static_cast<size_t>(type_id) <= m_managers.size()) {
-            m_managers.resize(static_cast<size_t>(type_id + 1));
+        TypeId tid = type_id<Manager, T>::value;
+        if (static_cast<size_t>(tid) <= m_managers.size()) {
+            m_managers.resize(static_cast<size_t>(tid + 1));
         }
-        m_managers[type_id] = std::make_unique<T>(std::forward<Args>(args)...);
-        m_managers[type_id]->m_world = this;
+        m_managers[tid] = std::make_unique<T>(std::forward<Args>(args)...);
+        m_managers[tid]->m_world = this;
         return get_manager<T>();
     }
 
     template<typename T> T& World::get_manager() {
         static_assert(std::is_base_of<Manager, T>::value, "World::get_manager: T must be derived from Manager");
-        TypeId type_id = Type<Manager>::id<T>();
-        return static_cast<T&>(*m_managers[type_id]);
+        TypeId tid = type_id<Manager, T>::value;
+        return static_cast<T&>(*m_managers[tid]);
     }
 
 }

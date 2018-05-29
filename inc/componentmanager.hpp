@@ -65,28 +65,28 @@ namespace tyra {
         size_t size() const { return m_num_registered_components; }
     };
 
-    template <typename T, typename... Args>	void ComponentManager::add(EntityId entity_id, Args&&... args)	{
+    template <typename T, typename... Args>	void ComponentManager::add(EntityId eid, Args&&... args)	{
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::add: T must be derived from Component");
-        TypeId type_id = Type<Component>::id<T>();
-        add(entity_id, type_id, std::make_unique<T>(std::forward<Args>(args)...));
+        TypeId tid = type_id<Component, T>::value;
+        add(eid, tid, std::make_unique<T>(std::forward<Args>(args)...));
     }
 
-    template <typename T> void ComponentManager::remove(EntityId entity_id) {
+    template <typename T> void ComponentManager::remove(EntityId eid) {
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::remove: T must be derived from Component");
-        TypeId type_id = Type<Component>::id<T>();
-        remove(entity_id, type_id);
+        TypeId tid = type_id<Component, T>::value;
+        remove(eid, tid);
     }
 
-    template <typename T> bool ComponentManager::valid(EntityId entity_id) const {
+    template <typename T> bool ComponentManager::valid(EntityId eid) const {
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::valid: T must be derived from Component");
-        TypeId type_id = Type<Component>::id<T>();
-        return valid(entity_id, type_id);
+        TypeId tid = type_id<Component, T>::value;
+        return valid(eid, tid);
     }
 
-    template <typename T> T& ComponentManager::get(EntityId entity_id) const {
+    template <typename T> T& ComponentManager::get(EntityId eid) const {
         static_assert(std::is_base_of<Component, T>::value, "ComponentManager::get: T must be derived from Component");
-        TypeId type_id = Type<Component>::id<T>();
-        return static_cast <T&>(get(entity_id, type_id));
+        TypeId tid = type_id<Component, T>::value;
+        return static_cast <T&>(get(eid, tid));
     }
 }
 

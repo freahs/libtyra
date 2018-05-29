@@ -27,26 +27,26 @@ TEST_CASE( "Building", "[componentview]" ) {
 
     SECTION ("interested") {
         auto s1 = tyra::ComponentSet()
-            .add(tyra::Type<tyra::Component>::id<C1>())
-            .add(tyra::Type<tyra::Component>::id<C2>());
+            .add(type_id<tyra::Component, C1>::value)
+            .add(type_id<tyra::Component, C2>::value);
         auto s2 = tyra::ComponentSet()
-            .add(tyra::Type<tyra::Component>::id<C1>())
-            .add(tyra::Type<tyra::Component>::id<C2>())
-            .add(tyra::Type<tyra::Component>::id<C3>());
+            .add(type_id<tyra::Component, C1>::value)
+            .add(type_id<tyra::Component, C2>::value)
+            .add(type_id<tyra::Component, C3>::value);
         auto s3 = tyra::ComponentSet()
-            .add(tyra::Type<tyra::Component>::id<C1>())
-            .add(tyra::Type<tyra::Component>::id<C2>())
-            .add(tyra::Type<tyra::Component>::id<C3>())
-            .add(tyra::Type<tyra::Component>::id<C4>());
+            .add(type_id<tyra::Component, C1>::value)
+            .add(type_id<tyra::Component, C2>::value)
+            .add(type_id<tyra::Component, C3>::value)
+            .add(type_id<tyra::Component, C4>::value);
         auto s4 = tyra::ComponentSet()
-            .add(tyra::Type<tyra::Component>::id<C1>())
-            .add(tyra::Type<tyra::Component>::id<C2>())
-            .add(tyra::Type<tyra::Component>::id<C3>())
-            .add(tyra::Type<tyra::Component>::id<C4>())
-            .add(tyra::Type<tyra::Component>::id<C6>());
+            .add(type_id<tyra::Component, C1>::value)
+            .add(type_id<tyra::Component, C2>::value)
+            .add(type_id<tyra::Component, C3>::value)
+            .add(type_id<tyra::Component, C4>::value)
+            .add(type_id<tyra::Component, C6>::value);
         auto s5 = tyra::ComponentSet()
-            .add(tyra::Type<tyra::Component>::id<C4>())
-            .add(tyra::Type<tyra::Component>::id<C5>());
+            .add(type_id<tyra::Component, C4>::value)
+            .add(type_id<tyra::Component, C5>::value);
         tyra::ComponentSet s6;
 
         auto c2 = tyra::ComponentView().requireAll<C1,C2,C3>();

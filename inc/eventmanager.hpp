@@ -48,18 +48,18 @@ namespace tyra {
 
     template <typename T> void EventManager::add(EntityId id) {
         static_assert(std::is_base_of<Event, T>::value, "EventManager::add: T must be derived from Event");
-        add(id, Type<Event>::id<T>());
+        add(id, type_id<Event, T>::value);
     }
 
     template <typename T> void EventManager::remove(EntityId id) {
         static_assert(std::is_base_of<Event, T>::value, "EventManager::remove: T must be derived from Event");
-        remove(id, Type<Event>::id<T>());
+        remove(id, type_id<Event, T>::value);
     }
 
     template <typename T, typename... Args> void EventManager::create(Args&&... args) {
         static_assert(std::is_base_of<Event, T>::value, "EventManager::remove: T must be derived from Event");
         T event{std::forward<Args>(args)...};
-        create(Type<Event>::id<T>(), event);
+        create(type_id<Event, T>::value, event);
     }
 
 }

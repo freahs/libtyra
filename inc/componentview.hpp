@@ -60,8 +60,8 @@ namespace tyra {
 	*/
     template<typename T>
     ComponentView& ComponentView::requireOne() {
-        TypeId type_id = Type<Component>::id<T>();
-        m_require_one.add(type_id);
+        TypeId tid = type_id<Component, T>::value;
+        m_require_one.add(tid);
         return *this;
     }
 
@@ -70,8 +70,8 @@ namespace tyra {
 	*/
     template<typename T1, typename T2, typename... Ts>
     ComponentView& ComponentView::requireOne() {
-        TypeId type_id = Type<Component>::id<T1>();
-        m_require_one.add(type_id);
+        TypeId tid = type_id<Component, T1>::value;
+        m_require_one.add(tid);
         requireOne<T2, Ts...>();
         return *this;
     }
@@ -84,8 +84,8 @@ namespace tyra {
 	*/
     template<typename T>
     ComponentView& ComponentView::requireAll() {
-        TypeId type_id = Type<Component>::id<T>();
-        m_require_all.add(type_id);
+        TypeId tid = type_id<Component, T>::value;
+        m_require_all.add(tid);
         return *this;
     }
 
@@ -94,8 +94,8 @@ namespace tyra {
 	*/
     template<typename T1, typename T2, typename... Ts>
     ComponentView& ComponentView::requireAll() {
-        TypeId type_id = Type<Component>::id<T1>();
-        m_require_all.add(type_id);
+        TypeId tid = type_id<Component, T1>::value;
+        m_require_all.add(tid);
         requireAll<T2, Ts...>();
         return *this;
     }
@@ -108,8 +108,8 @@ namespace tyra {
 	*/
     template<typename T>
     ComponentView& ComponentView::exclude() {
-        TypeId type_id = Type<Component>::id<T>();
-        m_exclude.add(type_id);
+        TypeId tid = type_id<Component, T>::value;
+        m_exclude.add(tid);
         return *this;
     }
 
@@ -118,8 +118,8 @@ namespace tyra {
 	*/
     template<typename T1, typename T2, typename... Ts>
     ComponentView& ComponentView::exclude() {
-        TypeId type_id = Type<Component>::id<T1>();
-        m_exclude.add(type_id);
+        TypeId tid = type_id<Component, T1>::value;
+        m_exclude.add(tid);
         exclude<T2, Ts...>();
         return *this;
     }

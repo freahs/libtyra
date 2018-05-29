@@ -13,26 +13,26 @@ TEST_CASE( "Building", "[componentset]" ) {
     struct C6 : public tyra::Component {};
 
     tyra::ComponentSet s1 = tyra::ComponentSet()
-        .add(tyra::Type<tyra::Component>::id<C1>())
-        .add(tyra::Type<tyra::Component>::id<C2>())
-        .add(tyra::Type<tyra::Component>::id<C3>())
-        .add(tyra::Type<tyra::Component>::id<C4>());
+        .add(tyra::type_id<tyra::Component, C1>::value)
+        .add(tyra::type_id<tyra::Component, C2>::value)
+        .add(tyra::type_id<tyra::Component, C3>::value)
+        .add(tyra::type_id<tyra::Component, C4>::value);
     tyra::ComponentSet s2 = tyra::ComponentSet()
-        .add(tyra::Type<tyra::Component>::id<C2>())
-        .add(tyra::Type<tyra::Component>::id<C3>())
-        .add(tyra::Type<tyra::Component>::id<C4>());
+        .add(tyra::type_id<tyra::Component, C2>::value)
+        .add(tyra::type_id<tyra::Component, C3>::value)
+        .add(tyra::type_id<tyra::Component, C4>::value);
     tyra::ComponentSet s3 = tyra::ComponentSet()
-        .add(tyra::Type<tyra::Component>::id<C4>())
-        .add(tyra::Type<tyra::Component>::id<C5>());
+        .add(tyra::type_id<tyra::Component, C4>::value)
+        .add(tyra::type_id<tyra::Component, C5>::value);
     tyra::ComponentSet s4 = tyra::ComponentSet()
-        .add(tyra::Type<tyra::Component>::id<C6>());
+        .add(tyra::type_id<tyra::Component, C6>::value);
     tyra::ComponentSet s5;
 
     SECTION ("compare") {
         tyra::ComponentSet s6 = tyra::ComponentSet()
-            .add(tyra::Type<tyra::Component>::id<C2>())
-            .add(tyra::Type<tyra::Component>::id<C3>())
-            .add(tyra::Type<tyra::Component>::id<C4>());
+            .add(tyra::type_id<tyra::Component, C2>::value)
+            .add(tyra::type_id<tyra::Component, C3>::value)
+            .add(tyra::type_id<tyra::Component, C4>::value);
         tyra::ComponentSet s7;
         REQUIRE(s1 != s2);
         REQUIRE(s2 == s6);
