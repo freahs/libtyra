@@ -27,9 +27,9 @@ POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 
 all: debug;
 
-tests: $(TBINS)
+test: $(TBINS)
 
-test_%: $(TBINDIR)/%;
+test_%: $(TBINDIR)/test_%;
 
 $(TBINDIR)/%: debug
 $(TBINDIR)/%: CXXFLAGS+=$(DBGFLAGS)
