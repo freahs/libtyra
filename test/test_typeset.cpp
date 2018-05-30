@@ -4,6 +4,26 @@
 #include "typeset.hpp"
 #include "typeid.hpp"
 
+TEST_CASE( "Building", "[TypeSet]") {
+    struct C : public tyra::Component {};
+    SECTION("add and remove") {
+        tyra::TypeSet s;
+        REQUIRE(s.empty() == true);
+        s.add(tyra::type_id<tyra::Component, C>::value);
+        REQUIRE(s.empty() == false);
+        REQUIRE(s.size() == 1);
+        REQUIRE(s.contains(tyra::type_id<tyra::Component, C>::value) == true);
+        s.add(tyra::type_id<tyra::Component, C>::value);
+        REQUIRE(s.empty() == false);
+        REQUIRE(s.size() == 1);
+        REQUIRE(s.contains(tyra::type_id<tyra::Component, C>::value) == true);
+        s.remove(tyra::type_id<tyra::Component, C>::value);
+        REQUIRE(s.empty() == true);
+        REQUIRE(s.size() == 0);
+        REQUIRE(s.contains(tyra::type_id<tyra::Component, C>::value) == false);
+    }
+}
+
 TEST_CASE( "API", "[TypeSet]" ) {
     struct C1 : public tyra::Component {};
     struct C2 : public tyra::Component {};
@@ -38,6 +58,9 @@ TEST_CASE( "API", "[TypeSet]" ) {
         REQUIRE(s2 == s6);
         REQUIRE(s2 != s5);
         REQUIRE(s5 == s7);
+        REQUIRE((s2 < s6) == false);
+        REQUIRE((s6 < s2) == false);
+        REQUIRE((s1 < s2) != (s2 < s1));
     }
 
     SECTION("size()") {
