@@ -4,18 +4,18 @@
 namespace tyra {
 
 	/*!
-	\brief Method to determine whether this particular view is interested in the ComponentSet \a s
-	\details A ComponentView is interested in a ComponentSet when the following conditions are met:
+	\brief Method to determine whether this particular view is interested in the TypeSet \a s
+	\details A ComponentView is interested in a TypeSet when the following conditions are met:
 	  - At least one of the three categories (`require one`, `require any` and `exclude`) have at least one Component associated with it
 	  - \a s is not empty
 	  - \a s contain all Components present in the `require all` category (if any)
 	  - \a s contains at least one of the Components present in the `require any` category
 	  - \a s does not contain any Components present in the `exclude` category (if any)
 
-	\param s The ComponentSet to offer
-	\returns true if this ComponentView are interested in the ComponentSet \a s, false if not
+	\param s The TypeSet to offer
+	\returns true if this ComponentView are interested in the TypeSet \a s, false if not
 	*/
-    bool ComponentView::interested(const ComponentSet& s) {
+    bool ComponentView::interested(const TypeSet& s) {
         if(m_require_all.empty() && m_exclude.empty() && m_require_one.empty()) {
             return false;
         }

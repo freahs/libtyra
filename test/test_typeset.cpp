@@ -1,10 +1,10 @@
 #include "catch.hpp"
 
 #include "component.hpp"
-#include "componentset.hpp"
+#include "typeset.hpp"
 #include "typeid.hpp"
 
-TEST_CASE( "Building", "[componentset]" ) {
+TEST_CASE( "API", "[TypeSet]" ) {
     struct C1 : public tyra::Component {};
     struct C2 : public tyra::Component {};
     struct C3 : public tyra::Component {};
@@ -12,32 +12,40 @@ TEST_CASE( "Building", "[componentset]" ) {
     struct C5 : public tyra::Component {};
     struct C6 : public tyra::Component {};
 
-    tyra::ComponentSet s1 = tyra::ComponentSet()
+    tyra::TypeSet s1 = tyra::TypeSet()
         .add(tyra::type_id<tyra::Component, C1>::value)
         .add(tyra::type_id<tyra::Component, C2>::value)
         .add(tyra::type_id<tyra::Component, C3>::value)
         .add(tyra::type_id<tyra::Component, C4>::value);
-    tyra::ComponentSet s2 = tyra::ComponentSet()
+    tyra::TypeSet s2 = tyra::TypeSet()
         .add(tyra::type_id<tyra::Component, C2>::value)
         .add(tyra::type_id<tyra::Component, C3>::value)
         .add(tyra::type_id<tyra::Component, C4>::value);
-    tyra::ComponentSet s3 = tyra::ComponentSet()
+    tyra::TypeSet s3 = tyra::TypeSet()
         .add(tyra::type_id<tyra::Component, C4>::value)
         .add(tyra::type_id<tyra::Component, C5>::value);
-    tyra::ComponentSet s4 = tyra::ComponentSet()
+    tyra::TypeSet s4 = tyra::TypeSet()
         .add(tyra::type_id<tyra::Component, C6>::value);
-    tyra::ComponentSet s5;
+    tyra::TypeSet s5;
 
     SECTION ("compare") {
-        tyra::ComponentSet s6 = tyra::ComponentSet()
+        tyra::TypeSet s6 = tyra::TypeSet()
             .add(tyra::type_id<tyra::Component, C2>::value)
             .add(tyra::type_id<tyra::Component, C3>::value)
             .add(tyra::type_id<tyra::Component, C4>::value);
-        tyra::ComponentSet s7;
+        tyra::TypeSet s7;
         REQUIRE(s1 != s2);
         REQUIRE(s2 == s6);
         REQUIRE(s2 != s5);
         REQUIRE(s5 == s7);
+    }
+
+    SECTION("size()") {
+        REQUIRE(s1.size() == 4);
+        REQUIRE(s2.size() == 3);
+        REQUIRE(s3.size() == 2);
+        REQUIRE(s4.size() == 1);
+        REQUIRE(s5.size() == 0);
     }
 
     SECTION ("empty()") {

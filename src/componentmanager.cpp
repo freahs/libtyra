@@ -79,7 +79,7 @@ namespace tyra {
         return *m_component_arrays[entity_index][type_id];
     }
 
-    const ComponentSet& ComponentManager::bits(EntityId entity_id) const {
+    const TypeSet& ComponentManager::bits(EntityId entity_id) const {
         EntityIndex entity_index = EntityManager::index(entity_id);
         return m_component_sets[entity_index];
     } 

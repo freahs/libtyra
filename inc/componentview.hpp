@@ -20,7 +20,7 @@
 #include <iostream>
 #include "component.hpp"
 #include "common.hpp"
-#include "componentset.hpp"
+#include "typeset.hpp"
 #include "typeid.hpp"
 
 #include <bitset>
@@ -28,14 +28,14 @@
 
 namespace tyra {
 	/*!
-	\brief A ComponentView are used to determine whether a subscriber of this ComponentView would be interested in a specific Component or ComponentSet
+	\brief A ComponentView are used to determine whether a subscriber of this ComponentView would be interested in a specific Component or TypeSet
 	*/
     class ComponentView {
 
     public:
-        ComponentSet    m_require_one;
-        ComponentSet    m_require_all;
-        ComponentSet    m_exclude;
+        TypeSet    m_require_one;
+        TypeSet    m_require_all;
+        TypeSet    m_exclude;
 
     public:
         virtual ~ComponentView() { }
@@ -46,7 +46,7 @@ namespace tyra {
         template<typename T> ComponentView& exclude();
         template<typename T1, typename T2, typename... Ts> ComponentView& exclude();
 
-        bool interested(const ComponentSet&);
+        bool interested(const TypeSet&);
         bool operator==(const ComponentView&) const;
         bool operator!=(const ComponentView&) const;
 
@@ -54,7 +54,7 @@ namespace tyra {
 
 	/*!
 	\brief Adds the Component type \a T to the `require one` category
-	\details A ComponentView with components `C1` and `C2` in it's `require any` category would be interested in a ComponentSet if it had any of `C1` and `C2` in it.
+	\details A ComponentView with components `C1` and `C2` in it's `require any` category would be interested in a TypeSet if it had any of `C1` and `C2` in it.
 	\tparam T The Component to add to the category
 	\return a reference to this ComponentView for method chaining
 	*/
@@ -78,7 +78,7 @@ namespace tyra {
 
 	/*!
 	\brief Adds the Component type \a T to the `require all` category
-	\details A ComponentView with components `C1` and `C2` in it's `require all` category would be interested in a ComponentSet if it had both `C1` and `C2` in it.
+	\details A ComponentView with components `C1` and `C2` in it's `require all` category would be interested in a TypeSet if it had both `C1` and `C2` in it.
 	\tparam T The Component to add to the category
 	\return a reference to this ComponentView for method chaining
 	*/
@@ -102,7 +102,7 @@ namespace tyra {
 
 	/*!
 	\brief Adds the Component type \a T to the `exclude` category
-	\details A ComponentView with components `C1` and `C2` in it's `exclude` category would be interested in a ComponentSet if it neither `C1` nor `C2` in it.
+	\details A ComponentView with components `C1` and `C2` in it's `exclude` category would be interested in a TypeSet if it neither `C1` nor `C2` in it.
 	\tparam T The Component to add to the category
 	\return a reference to this ComponentView for method chaining
 	*/

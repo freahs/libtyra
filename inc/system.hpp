@@ -61,7 +61,7 @@ namespace tyra {
         void update();
         size_t size() const { return m_entities.size(); }
 
-        void entityUpdated(EntityId, const ComponentSet&);
+        void entityUpdated(EntityId, const TypeSet&);
     };
 
 }

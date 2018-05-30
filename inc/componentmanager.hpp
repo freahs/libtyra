@@ -18,7 +18,7 @@
 #define TYRA_COMPONENTMANAGER_H
 
 #include "component.hpp"
-#include "componentset.hpp"
+#include "typeset.hpp"
 #include "common.hpp"
 #include "manager.hpp"
 #include "typeid.hpp"
@@ -46,7 +46,7 @@ namespace tyra {
 
         std::unordered_set<EntityId>    m_updated;
         std::vector<ComponentArray>     m_component_arrays;
-        std::vector<ComponentSet>       m_component_sets;
+        std::vector<TypeSet>            m_component_sets;
         size_t                          m_num_registered_components;
 
         void add(EntityId, TypeId, std::unique_ptr<Component>);
@@ -60,7 +60,7 @@ namespace tyra {
         template <typename T> bool valid(EntityId) const;
         template <typename T> T& get(EntityId) const;
 
-        const ComponentSet& bits(EntityId) const;
+        const TypeSet& bits(EntityId) const;
         std::unordered_set<EntityId>& updated() { return m_updated; }
         size_t size() const { return m_num_registered_components; }
     };

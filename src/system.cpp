@@ -29,7 +29,7 @@
 
 namespace tyra {
 
-    void System::entityUpdated(EntityId id, const ComponentSet& entity_components) {
+    void System::entityUpdated(EntityId id, const TypeSet& entity_components) {
         bool p = m_entities.find(id) != m_entities.end();
         bool i = interested(entity_components);
         if (i && !p) {

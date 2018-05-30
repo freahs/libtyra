@@ -2,7 +2,7 @@
 
 #include "componentmanager.hpp"
 #include "componentview.hpp"
-#include "componentset.hpp"
+#include "typeset.hpp"
 #include "vectormap.hpp"
 
 TEST_CASE( "Building", "[vectormap]" ) {
