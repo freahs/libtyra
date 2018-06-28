@@ -2,5 +2,5 @@
 echo "Environment: `uname -a`"
 echo "Compiler: `$CXX --version`"
 
-make tests
+make test
 run-parts ./bin/test
