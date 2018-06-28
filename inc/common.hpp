@@ -2,6 +2,7 @@
 #define TYRA_CONFIG_H
 
 #include <cstdint>
+#include <functional>
 
 namespace tyra {
 
@@ -23,6 +24,16 @@ namespace tyra {
     EntityIndex inline eid_to_idx(EntityId id) { return id & MAX_ENTITIES; }
     EntityVersion inline eid_to_ver(EntityId id) { return id >> sizeof(EntityIndex) * 8; }
     EntityId inline eid_from_ver_idx(EntityVersion ver, EntityIndex idx) { return static_cast<EntityId>(ver) << sizeof(EntityIndex) * 8 | idx; }
+
+    template <class T>
+    inline void hash_combine(std::size_t& seed, const T& v) {
+        std::hash<T> hasher;
+        hash_combine(seed, hasher(v));
+    }
+
+    inline void hash_combine(std::size_t& seed, const size_t& h) {
+        seed ^= h + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
 }
 
 #endif
